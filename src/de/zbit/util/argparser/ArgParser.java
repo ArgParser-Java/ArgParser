@@ -270,13 +270,13 @@ import de.zbit.util.StringUtil;
  * Usage: java argparser.SimpleExample
  * Options include:
  * 
- * -help,-?                displays help information
+ * --help,-?                displays help information
  * -theta &lt;float&gt;          theta value (in degrees)
  * -file &lt;string&gt;          name of the operating file
  * -debug                  enables display of debugging info
  * </pre>
  * 
- * The options <code>-help</code> and <code>-?</code> are including in the
+ * The options <code>--help</code> and <code>-?</code> are including in the
  * parser by default as help options, and they automatically cause the help
  * message to be printed. To exclude these
  * options, one should use the constructor {@link #ArgParser(String,boolean)
@@ -1171,7 +1171,7 @@ public class ArgParser {
 
 	/**
 	 * Creates an <code>ArgParser</code> with a synopsis string, and the default
-	 * help options <code>-help</code> and <code>-&#063;</code>.
+	 * help options <code>--help</code> and <code>-&#063;</code>.
 	 * 
 	 * @param synopsisString
 	 *        string that briefly describes program usage, for use by
@@ -1185,7 +1185,7 @@ public class ArgParser {
 
 	/**
 	 * Creates an <code>ArgParser</code> with a synopsis string. The help options
-	 * <code>-help</code> and <code>-?</code> are added if
+	 * <code>--help</code> and <code>-?</code> are added if
 	 * <code>defaultHelp</code> is true.
 	 * 
 	 * @param synopsisString
@@ -1200,7 +1200,7 @@ public class ArgParser {
 		matchList = new Vector<Record>(128);
 		this.synopsisString = synopsisString;
 		if (defaultHelp) {
-			addOption("-help,-? %h #displays help information", null);
+			addOption("--help,-? %h #displays help information", null);
 			defaultHelpOption = firstHelpOption = (Record) matchList.get(0);
 		}
 	}
@@ -2406,7 +2406,7 @@ public class ArgParser {
 							&& (prefix.length() > 2)) {
 						break;
 					}
-					optionInfo.append(',');
+					optionInfo.append(", ");
 				}
 			}
 			if (!hasOneWordAlias) {
