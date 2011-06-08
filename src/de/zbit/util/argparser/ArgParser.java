@@ -458,10 +458,18 @@ public class ArgParser {
 	 * 
 	 */
 	static class NameDesc {
+		/**
+		 * 
+		 */
 		String name;
-		// oneWord implies that any value associated with
-		// option is concatenated onto the argument string itself
+		/**
+		 * oneWord implies that any value associated with option is concatenated
+		 * onto the argument string itself
+		 */
 		boolean oneWord;
+		/**
+		 * 
+		 */
 		NameDesc next = null;
 	}
 
@@ -2383,12 +2391,21 @@ public class ArgParser {
 					break;
 				}
 			}
+			String next = null;
 			for (ndesc = rec.nameList; ndesc != null; ndesc = ndesc.next) {
 				optionInfo.append(ndesc.name);
 				if (hasOneWordAlias && !ndesc.oneWord) {
 					optionInfo.append(' ');
 				}
 				if (ndesc.next != null) {
+					next = ndesc.next.name;
+					String prefix = StringUtil.getLongestCommonPrefix(next, ndesc.name);
+					int lenDiffCurr = Math.abs(ndesc.name.length() - prefix.length());
+					int lenDiffNext = Math.abs(next.length() - prefix.length());
+					if (((lenDiffCurr == 1) || (lenDiffNext == 1))
+							&& (prefix.length() > 2)) {
+						break;
+					}
 					optionInfo.append(',');
 				}
 			}
@@ -2411,7 +2428,7 @@ public class ArgParser {
 				optionInfo.append('X');
 				optionInfo.append(rec.numValues);
 			}
-			s.append(optionInfo);
+			s.append(optionInfo.toString());
 			if (rec.helpMsg.length() > 0) {
 				int pad = helpIndent - optionInfo.length();
 				if (pad < 2) {
@@ -2421,7 +2438,7 @@ public class ArgParser {
 				s.append(spaceString(pad));
 				s.append(StringUtil.insertLineBreaks(rec.helpMsg, 
 					ConsoleTools.getColumns() - helpIndent, 
-					"\n" + StringUtil.fill("", helpIndent, ' ', false)));
+					'\n' + StringUtil.fill("", helpIndent, ' ', false)));
 			}
 			s.append('\n');
 		}
