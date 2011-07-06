@@ -13,15 +13,14 @@
  */
 package de.zbit.util.argparser;
 
-import java.io.PrintStream;
-import java.io.IOException;
-import java.io.LineNumberReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.PrintStream;
 import java.io.Reader;
-import java.util.Vector;
-
 import java.lang.reflect.Array;
+import java.util.Vector;
 
 import de.zbit.util.ConsoleTools;
 import de.zbit.util.StringUtil;
@@ -2436,9 +2435,9 @@ public class ArgParser {
 					pad = helpIndent;
 				}
 				s.append(spaceString(pad));
-				s.append(StringUtil.insertLineBreaks(rec.helpMsg, 
+				s.append(StringUtil.insertLineBreaksAndCount(rec.helpMsg, 
 					ConsoleTools.getColumns() - helpIndent, 
-					'\n' + StringUtil.fill("", helpIndent, ' ', false)));
+					'\n' + StringUtil.fill("", helpIndent, ' ', false), true).getA());
 			}
 			s.append('\n');
 		}
