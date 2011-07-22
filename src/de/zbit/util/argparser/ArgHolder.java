@@ -34,25 +34,14 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	private static final long serialVersionUID = 5362889114277649711L;
 	
 	/**
+	 * The type of argument.
+	 */
+	private Class<V> clazz;
+	/**
 	 * Value of the {@link Object} reference, set and examined by the application
 	 * as needed.
 	 */
 	private V value;
-	
-	/**
-	 * 
-	 */
-	public ArgHolder() {
-		this((V) null);
-	}
-	
-	/**
-	 * 
-	 * @param value
-	 */
-	public ArgHolder(V value) {
-		setValue(value);
-	}
 	
 	/**
 	 * Clone constructor.
@@ -61,6 +50,30 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	 */
 	public ArgHolder(ArgHolder<V> valueHolder) {
 		this(valueHolder.getValue());
+	}
+	
+	/**
+	 * Creates a new {@link ArgHolder} of the given type ({@link Class}) whose
+	 * value is set to null.
+	 */
+	public ArgHolder(Class<V> clazz) {
+		this.clazz = clazz;
+		setValue(null);
+	}
+	
+	/**
+	 * Creates a new {@link ArgHolder} object with the given value, whose type is
+	 * set to the {@link Class} of the given value.
+	 * 
+	 * @param value
+	 *        must not be null. If this value is null, please use the constructor
+	 *        that accepts an instance of {@link Class}.
+	 * @see #ArgHolder(Class)
+	 */
+	@SuppressWarnings("unchecked")
+	public ArgHolder(V value) {
+		this((Class<V>) value.getClass());
+		setValue(value);
 	}
 
 	/*
@@ -71,7 +84,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	public ArgHolder<V> clone() {
 		return new ArgHolder<V>(this);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -81,12 +94,21 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	public boolean equals(Object o) {
 		if (o instanceof ArgHolder<?>) {
 			ArgHolder<?> v = (ArgHolder<?>) o;
-			boolean equal = v.isSetValue() == isSetValue();
+			boolean equal = getType().equals(v.getType());
+			equal &= v.isSetValue() == isSetValue();
 			if (equal && isSetValue()) { 
 				return v.getValue().equals(getValue()); 
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Class<V> getType() {
+		return clazz;
 	}
 	
 	/**
@@ -122,7 +144,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	@Override
 	public String toString() {
 		return String.format("%s[%s]", getClass().getSimpleName(),
-			getValue() == null ? "null" : getValue().toString());
+			(getValue() == null) ? "null" : getValue().toString());
 	}
 	
 	/**

@@ -426,11 +426,14 @@ public class ArgParserTest {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	double getDoubleValue(Object obj, int k) {
-		if (obj instanceof DoubleHolder) {
-			return ((DoubleHolder) obj).getValue();
-		} else if (obj instanceof FloatHolder) {
-			return ((FloatHolder) obj).getValue();
+		if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Double.class)) {
+			return ((ArgHolder<Double>) obj).getValue();
+		} else if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Float.class)) {
+			return ((ArgHolder<Float>) obj).getValue();
 		} else if (obj instanceof double[]) {
 			return ((double[]) obj)[k];
 		} else if (obj instanceof float[]) {
@@ -447,11 +450,14 @@ public class ArgParserTest {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	long getLongValue(Object obj, int k) {
-		if (obj instanceof LongHolder) {
-			return ((LongHolder) obj).getValue();
-		} else if (obj instanceof IntHolder) {
-			return ((IntHolder) obj).getValue();
+		if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Long.class)) {
+			return ((ArgHolder<Long>) obj).getValue();
+		} else if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Integer.class)) {
+			return ((ArgHolder<Integer>) obj).getValue();
 		} else if (obj instanceof long[]) {
 			return ((long[]) obj)[k];
 		} else if (obj instanceof int[]) {
@@ -468,9 +474,11 @@ public class ArgParserTest {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	String getStringValue(Object obj, int k) {
-		if (obj instanceof StringHolder) {
-			return ((StringHolder) obj).getValue();
+		if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(String.class)) {
+			return ((ArgHolder<String>) obj).getValue();
 		} else if (obj instanceof String[]) {
 			return ((String[]) obj)[k];
 		} else {
@@ -485,9 +493,11 @@ public class ArgParserTest {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	boolean getBooleanValue(Object obj, int k) {
-		if (obj instanceof BooleanHolder) {
-			return ((BooleanHolder) obj).getValue();
+		if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Boolean.class)) {
+			return ((ArgHolder<Boolean>) obj).getValue();
 		} else if (obj instanceof boolean[]) {
 			return ((boolean[]) obj)[k];
 		} else {
@@ -502,9 +512,11 @@ public class ArgParserTest {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	char getCharValue(Object obj, int k) {
-		if (obj instanceof CharHolder) {
-			return ((CharHolder) obj).getValue();
+		if ((obj instanceof ArgHolder<?>)
+				&& ((ArgHolder<?>) obj).getType().equals(Character.class)) {
+			return ((ArgHolder<Character>) obj).getValue();
 		} else if (obj instanceof char[]) {
 			return ((char[]) obj)[k];
 		} else {
@@ -776,19 +788,19 @@ public class ArgParserTest {
 	public static void main(String[] args) {
 		ArgParserTest test = new ArgParserTest();
 		
-		BooleanHolder bh = new BooleanHolder();
+		ArgHolder<Boolean> bh = new ArgHolder<Boolean>(Boolean.class);
 		boolean[] b3 = new boolean[3];
-		CharHolder ch = new CharHolder();
+		ArgHolder<Character> ch = new ArgHolder<Character>(Character.class);
 		char[] c3 = new char[3];
-		IntHolder ih = new IntHolder();
+		ArgHolder<Integer> ih = new ArgHolder<Integer>(Integer.class);
 		int[] i3 = new int[3];
-		LongHolder lh = new LongHolder();
+		ArgHolder<Long> lh = new ArgHolder<Long>(Long.class);
 		long[] l3 = new long[3];
-		FloatHolder fh = new FloatHolder();
+		ArgHolder<Float> fh = new ArgHolder<Float>(Float.class);
 		float[] f3 = new float[3];
-		DoubleHolder dh = new DoubleHolder();
+		ArgHolder<Double> dh = new ArgHolder<Double>(Double.class);
 		double[] d3 = new double[3];
-		StringHolder sh = new StringHolder();
+		ArgHolder<String> sh = new ArgHolder<String>(String.class);
 		String[] s3 = new String[3];
 		
 		test.checkAdd("-foo %i{[0,10)}X3 #sets the value of foo",
@@ -1399,8 +1411,8 @@ public class ArgParserTest {
 		vec.clear();
 		test.checkMatches(tests, MULTI_WORD);
 		
-		IntHolder intHolder = new IntHolder();
-		StringHolder strHolder = new StringHolder();
+		ArgHolder<Integer> intHolder = new ArgHolder<Integer>(Integer.class);
+		ArgHolder<String> strHolder = new ArgHolder<String>(String.class);
 		
 		ArgParser parser = new ArgParser("test");
 		parser.addOption("-foo %d #an int", intHolder);

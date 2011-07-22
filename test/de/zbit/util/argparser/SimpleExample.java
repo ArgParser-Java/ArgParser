@@ -22,36 +22,33 @@ package de.zbit.util.argparser;
  * @version $Rev$
  * @see ArgParser
  */
-public class SimpleExample
-{
+public class SimpleExample {
 	/**
 	 * Run this to invoke command line parsing.
 	 */
-	public static void main (String[] args) 
-	 {
-	   // create holder objects for storing results ...
- 
-	   DoubleHolder theta = new DoubleHolder();
-	   StringHolder fileName = new StringHolder();
-	   BooleanHolder debug = new BooleanHolder();
- 
-	   // create the parser and specify the allowed options ...
- 
-	   ArgParser parser = new ArgParser("java argparser.SimpleExample");
-	   parser.addOption ("-theta %f #theta value (in degrees)", theta); 
-	   parser.addOption ("-file %s #name of the operating file", fileName);
-	   parser.addOption ("-debug %v #enables display of debugging info",
-			     debug);
-
-	   // and then match the arguments
-
-	   parser.matchAllArgs (args);
-
-	   // now print out the values
-
-	   System.out.println ("theta=" + theta.getValue());
-	   System.out.println ("fileName=" + fileName.getValue());
-	   System.out.println ("debug=" + debug.getValue());
-	 }
+	public static void main(String[] args) {
+		// create holder objects for storing results ...
+		
+		ArgHolder<Double> theta = new ArgHolder<Double>(Double.class);
+		ArgHolder<String> fileName = new ArgHolder<String>(String.class);
+		ArgHolder<Boolean> debug = new ArgHolder<Boolean>(Boolean.valueOf(false));
+		
+		// create the parser and specify the allowed options ...
+		
+		ArgParser parser = new ArgParser("java argparser.SimpleExample");
+		parser.addOption("-theta %f #theta value (in degrees)", theta);
+		parser.addOption("-file %s #name of the operating file", fileName);
+		parser.addOption("-debug %v #enables display of debugging info", debug);
+		
+		// and then match the arguments
+		
+		parser.matchAllArgs(args);
+		
+		// now print out the values
+		
+		System.out.println("theta=" + theta.getValue());
+		System.out.println("fileName=" + fileName.getValue());
+		System.out.println("debug=" + debug.getValue());
+	}
 }
 

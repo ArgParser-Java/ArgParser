@@ -1012,6 +1012,7 @@ public class ArgParser {
 		 * @param resultIdx
 		 * @throws ArgParseException
 		 */
+		@SuppressWarnings("unchecked")
 		void scanValue(Object result, String name, String s, int resultIdx)
 			throws ArgParseException {
 			double dval = 0;
@@ -1124,31 +1125,31 @@ public class ArgParser {
 			} else {
 				switch (type) {
 					case BOOLEAN: {
-						((BooleanHolder) result).setValue(Boolean.valueOf(bval));
+						((ArgHolder<Boolean>) result).setValue(Boolean.valueOf(bval));
 						break;
 					}
 					case CHAR: {
-						((CharHolder) result).setValue(Character.valueOf((char) lval));
+						((ArgHolder<Character>) result).setValue(Character.valueOf((char) lval));
 						break;
 					}
 					case INT: {
-						((IntHolder) result).setValue(Integer.valueOf((int) lval));
+						((ArgHolder<Integer>) result).setValue(Integer.valueOf((int) lval));
 						break;
 					}
 					case LONG: {
-						((LongHolder) result).setValue(lval);
+						((ArgHolder<Long>) result).setValue(lval);
 						break;
 					}
 					case FLOAT: {
-						((FloatHolder) result).setValue(Float.valueOf((float) dval));
+						((ArgHolder<Float>) result).setValue(Float.valueOf((float) dval));
 						break;
 					}
 					case DOUBLE: {
-						((DoubleHolder) result).setValue(Double.valueOf(dval));
+						((ArgHolder<Double>) result).setValue(Double.valueOf(dval));
 						break;
 					}
 					case STRING: {
-						((StringHolder) result).setValue(sval);
+						((ArgHolder<String>) result).setValue(sval);
 						break;
 					}
 				}
@@ -1709,10 +1710,13 @@ public class ArgParser {
 				case 'o':
 				case 'd':
 				case 'x': {
-					if (resHolder instanceof LongHolder || resHolder instanceof long[]) {
+					if (((resHolder instanceof ArgHolder<?>) && (((ArgHolder<?>) resHolder)
+							.getType().equals(Long.class)))
+							|| (resHolder instanceof long[])) {
 						rec.type = Record.LONG;
-					} else if (resHolder instanceof IntHolder
-							|| resHolder instanceof int[]) {
+					} else if (((resHolder instanceof ArgHolder<?>)
+							&& (((ArgHolder<?>) resHolder).getType().equals(Integer.class)))
+							|| (resHolder instanceof int[])) {
 						rec.type = Record.INT;
 					} else {
 						throw new IllegalArgumentException("Invalid result holder for %"
@@ -1721,7 +1725,8 @@ public class ArgParser {
 					break;
 				}
 				case 'c': {
-					if (!(resHolder instanceof CharHolder)
+					if (!((resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) resHolder)
+							.getType().equals(Character.class))
 							&& !(resHolder instanceof char[])) { 
 						throw new IllegalArgumentException(
 						"Invalid result holder for %c"); 
@@ -1731,7 +1736,8 @@ public class ArgParser {
 				}
 				case 'v':
 				case 'b': {
-					if (!(resHolder instanceof BooleanHolder)
+					if (!((resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) resHolder)
+							.getType().equals(Boolean.class))
 							&& !(resHolder instanceof boolean[])) { 
 						throw new IllegalArgumentException(
 						"Invalid result holder for %" + c); 
@@ -1740,11 +1746,13 @@ public class ArgParser {
 					break;
 				}
 				case 'f': {
-					if (resHolder instanceof DoubleHolder
-							|| resHolder instanceof double[]) {
+					if (((resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) resHolder)
+							.getType().equals(Double.class))
+							|| (resHolder instanceof double[])) {
 						rec.type = Record.DOUBLE;
-					} else if (resHolder instanceof FloatHolder
-							|| resHolder instanceof float[]) {
+					} else if (((resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) resHolder)
+							.getType().equals(Float.class))
+							|| (resHolder instanceof float[])) {
 						rec.type = Record.FLOAT;
 					} else {
 						throw new IllegalArgumentException("Invalid result holder for %f");
@@ -1752,8 +1760,9 @@ public class ArgParser {
 					break;
 				}
 				case 's': {
-					if (!(resHolder instanceof StringHolder)
-							&& !(resHolder instanceof String[])) { 
+					if (!((resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) resHolder)
+							.getType().equals(String.class))
+							&& !(resHolder instanceof String[])) {
 						throw new IllegalArgumentException(
 						"Invalid result holder for %s"); 
 					}
@@ -1892,7 +1901,7 @@ public class ArgParser {
 	 * @param ndescHolder
 	 * @return
 	 */
-	private Record getRecord(String arg, ObjectHolder ndescHolder) {
+	private Record getRecord(String arg, ArgHolder<Object> ndescHolder) {
 		NameDesc ndesc;
 		for (int i = 0; i < matchList.size(); i++) {
 			Record rec = (Record) matchList.get(i);
@@ -1933,7 +1942,7 @@ public class ArgParser {
 	 * @return
 	 */
 	String getOptionName(String arg) {
-		ObjectHolder ndescHolder = new ObjectHolder();
+		ArgHolder<Object> ndescHolder = new ArgHolder<Object>(Object.class);
 		Record rec = getRecord(arg, ndescHolder);
 		return (rec != null) ? ((NameDesc) ndescHolder.getValue()).name : null;
 	}
@@ -1967,19 +1976,19 @@ public class ArgParser {
 		if (rec.numValues == 1) {
 			switch (rec.type) {
 				case Record.LONG: {
-					return new LongHolder();
+					return new ArgHolder<Long>(Long.class);
 				}
 				case Record.CHAR: {
-					return new CharHolder();
+					return new ArgHolder<Character>(Character.class);
 				}
 				case Record.BOOLEAN: {
-					return new BooleanHolder();
+					return new ArgHolder<Boolean>(Boolean.class);
 				}
 				case Record.DOUBLE: {
-					return new DoubleHolder();
+					return new ArgHolder<Double>(Double.class);
 				}
 				case Record.STRING: {
-					return new StringHolder();
+					return new ArgHolder<String>(String.class);
 				}
 			}
 		} else {
@@ -2248,9 +2257,10 @@ public class ArgParser {
 		unmatchedArg = null;
 		setError(null);
 		try {
-			ObjectHolder ndescHolder = new ObjectHolder();
+			ArgHolder<Object> ndescHolder = new ArgHolder<Object>(Object.class);
 			Record rec = getRecord(args[idx], ndescHolder);
-			if (rec == null || (rec.convertCode == 'h' && !helpOptionsEnabled)) { // didn't match
+			if ((rec == null) || (rec.convertCode == 'h' && !helpOptionsEnabled)) { 
+				// didn't match
 				unmatchedArg = new String(args[idx]);
 				return idx + 1;
 			}
@@ -2281,8 +2291,9 @@ public class ArgParser {
 					}
 				}
 			} else {
-				if (rec.resHolder instanceof BooleanHolder) {
-					((BooleanHolder) result).setValue(Boolean.valueOf(rec.vval));
+				if (((rec.resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) rec.resHolder)
+						.getType().equals(Boolean.class))) {
+					((ArgHolder<Boolean>) result).setValue(Boolean.valueOf(rec.vval));
 				} else {
 					for (int k = 0; k < rec.numValues; k++) {
 						((boolean[]) result)[k] = rec.vval;

@@ -24,30 +24,31 @@ import java.io.IOException;
   * @since Fall 2004
   * @version $Rev$
   */
-public class ArgParseException extends IOException
-{
+public class ArgParseException extends IOException {
 	/**
 	 * Generated serial version identifier.
 	 */
 	private static final long serialVersionUID = -8868205997224787923L;
-
-	/** 
-	  * Creates a new ArgParseException with the given message. 
-	  * 
-	  * @param msg Exception message
-	  */
-	public ArgParseException (String msg)
-	 { super (msg);
-	 }
-
-	/** 
-	  * Creates a new ArgParseException from the given
-	  * argument and message. 
-	  * 
-	  * @param arg Offending argument
-	  * @param msg Error message
-	  */
-	public ArgParseException (String arg, String msg)
-	 { super (arg + ": " + msg);
-	 }
+	
+	/**
+	 * Creates a new ArgParseException with the given message.
+	 * 
+	 * @param msg
+	 *        Exception message
+	 */
+	public ArgParseException(String msg) {
+		super(msg);
+	}
+	
+	/**
+	 * Creates a new ArgParseException from the given argument and message.
+	 * 
+	 * @param arg
+	 *        Offending argument
+	 * @param msg
+	 *        Error message
+	 */
+	public ArgParseException(String arg, String msg) {
+		super(arg + ": " + msg);
+	}
 }
