@@ -34,9 +34,24 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	private static final long serialVersionUID = 5362889114277649711L;
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public static final ArgHolder<Boolean> createBooleanHolder() {
+		// TODO: Create more factory methods.
+		return new ArgHolder<Boolean>(Boolean.FALSE);
+	}
+	
+	/**
 	 * The type of argument.
 	 */
 	private Class<V> clazz;
+	
+	/**
+	 * 
+	 */
+	private V defaultValue;
+	
 	/**
 	 * Value of the {@link Object} reference, set and examined by the application
 	 * as needed.
@@ -58,22 +73,22 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	 */
 	public ArgHolder(Class<V> clazz) {
 		this.clazz = clazz;
-		setValue(null);
+		this.defaultValue = this.value = null;
 	}
 	
 	/**
 	 * Creates a new {@link ArgHolder} object with the given value, whose type is
 	 * set to the {@link Class} of the given value.
 	 * 
-	 * @param value
+	 * @param defaultValue
 	 *        must not be null. If this value is null, please use the constructor
 	 *        that accepts an instance of {@link Class}.
 	 * @see #ArgHolder(Class)
 	 */
 	@SuppressWarnings("unchecked")
-	public ArgHolder(V value) {
-		this((Class<V>) value.getClass());
-		setValue(value);
+	public ArgHolder(V defaultValue) {
+		this((Class<V>) defaultValue.getClass());
+		this.defaultValue = defaultValue;
 	}
 
 	/*
@@ -92,17 +107,32 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof ArgHolder<?>) {
+		if (o == this) {
+			return true;
+		}
+		if (o.getClass().equals(ArgHolder.class)) {
 			ArgHolder<?> v = (ArgHolder<?>) o;
 			boolean equal = getType().equals(v.getType());
 			equal &= v.isSetValue() == isSetValue();
-			if (equal && isSetValue()) { 
-				return v.getValue().equals(getValue()); 
+			if (equal && isSetValue()) {
+				equal &= v.getValue().equals(getValue()); 
 			}
+			equal &= v.isSetDefaultValue() == isSetDefaultValue();
+			if (equal && isSetDefaultValue()) {
+				equal &= v.getDefaultValue().equals(getDefaultValue());
+			}
+			return equal;
 		}
 		return false;
 	}
 	
+	/**
+	 * @return
+	 */
+	public V getDefaultValue() {
+		return defaultValue;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -110,13 +140,31 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	public Class<V> getType() {
 		return clazz;
 	}
-	
+
 	/**
 	 * 
 	 * @return the {@link #value}.
 	 */
 	public V getValue() {
 		return value;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int hash = super.hashCode() + 7;
+		hash += clazz.hashCode() + (isSetValue() ? value.hashCode() : 0);
+		hash += (defaultValue != null ? defaultValue.hashCode() : 0);
+		return hash;
+	}
+	
+	/**
+	 * @return
+	 */
+	public boolean isSetDefaultValue() {
+		return defaultValue != null;
 	}
 	
 	/**
