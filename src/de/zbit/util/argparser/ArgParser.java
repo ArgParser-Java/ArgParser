@@ -389,12 +389,12 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	Vector<Record> matchList;
+	private Vector<Record> matchList;
 	//	int tabSpacing = 8;
 	/**
    * 
    */
-	String synopsisString;
+	private String synopsisString;
 	/**
 	 * 
 	 */
@@ -402,32 +402,32 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	Record defaultHelpOption = null;
+	private Record defaultHelpOption = null;
 	/**
 	 * 
 	 */
-	Record firstHelpOption = null;
+	private Record firstHelpOption = null;
 	/**
 	 * 
 	 */
-	PrintStream printStream = System.out;
+	private PrintStream printStream = System.out;
 	/**
 	 * 
 	 */
-	int helpIndent = 6;
+	private int helpIndent = 6;
 	/**
 	 * 
 	 */
-	String errMsg = null;
+	private String errMsg = null;
 	/**
 	 * 
 	 */
-	String unmatchedArg = null;
+	private String unmatchedArg = null;
 	
 	/**
    * 
    */
-	static String validConversionCodes = "iodxcbfsvh";
+	private static String validConversionCodes = "iodxcbfsvh";
 	
 	/**
 	 * Indicates that the program should exit with an appropriate message in the
@@ -456,7 +456,7 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	static class NameDesc {
+	private static class NameDesc {
 		/**
 		 * 
 		 */
@@ -475,7 +475,7 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	static class RangePnt {
+ static class RangePnt {
 		/**
 		  * 
 		  */
@@ -502,7 +502,7 @@ public class ArgParser {
 		 * @param s
 		 * @param closed
 		 */
-		RangePnt(String s, boolean closed) {
+		public RangePnt(String s, boolean closed) {
 			sval = s;
 			this.closed = closed;
 		}
@@ -512,7 +512,7 @@ public class ArgParser {
 		 * @param d
 		 * @param closed
 		 */
-		RangePnt(double d, boolean closed) {
+		public RangePnt(double d, boolean closed) {
 			dval = d;
 			this.closed = closed;
 		}
@@ -522,7 +522,7 @@ public class ArgParser {
 		 * @param l
 		 * @param closed
 		 */
-		RangePnt(long l, boolean closed) {
+		public RangePnt(long l, boolean closed) {
 			lval = l;
 			this.closed = closed;
 		}
@@ -532,7 +532,7 @@ public class ArgParser {
 		 * @param b
 		 * @param closed
 		 */
-		RangePnt(boolean b, boolean closed) {
+		public RangePnt(boolean b, boolean closed) {
 			bval = b;
 			this.closed = closed;
 		}
@@ -543,7 +543,7 @@ public class ArgParser {
 		 * @param type
 		 * @throws IllegalArgumentException
 		 */
-		RangePnt(StringScanner scanner, int type) throws IllegalArgumentException {
+		public RangePnt(StringScanner scanner, int type) throws IllegalArgumentException {
 			String typeName = null;
 			try {
 				switch (type) {
@@ -587,7 +587,7 @@ public class ArgParser {
 		 * 
 		 * @param closed
 		 */
-		void setClosed(boolean closed) {
+		public void setClosed(boolean closed) {
 			this.closed = closed;
 		}
 		
@@ -595,7 +595,7 @@ public class ArgParser {
 		 * 
 		 * @return
 		 */
-		boolean getClosed() {
+		public boolean getClosed() {
 			return closed;
 		}
 		
@@ -604,14 +604,11 @@ public class ArgParser {
 		 * @param d
 		 * @return
 		 */
-		int compareTo(double d) {
+		public int compareTo(double d) {
 			if (dval < d) {
 				return -1;
-			} else if (d == dval) {
-				return 0;
-			} else {
-				return 1;
 			}
+			return (d == dval) ? 0 : 1;
 		}
 		
 		/**
@@ -619,7 +616,7 @@ public class ArgParser {
 		 * @param l
 		 * @return
 		 */
-		int compareTo(long l) {
+		public int compareTo(long l) {
 			if (lval < l) {
 				return -1;
 			} else if (l == lval) {
@@ -634,7 +631,7 @@ public class ArgParser {
 		 * @param s
 		 * @return
 		 */
-		int compareTo(String s) {
+		public int compareTo(String s) {
 			return sval.compareTo(s);
 		}
 		
@@ -643,12 +640,8 @@ public class ArgParser {
 		 * @param b
 		 * @return
 		 */
-		int compareTo(boolean b) {
-			if (b == bval) {
-				return 0;
-			} else {
-				return 1;
-			}
+		public int compareTo(boolean b) {
+			return (b == bval) ? 0 : 1;
 		}
 		
 		/*
@@ -670,15 +663,15 @@ public class ArgParser {
 		/**
 		 * 
 		 */
-		RangePnt low = null;
+		private RangePnt low = null;
 		/**
 	    * 
 	    */
-		RangePnt high = null;
+		private RangePnt high = null;
 		/**
 	    * 
 	    */
-		RangeAtom next = null;
+		private RangeAtom next = null;
 		
 		/**
 		 * 
@@ -687,7 +680,7 @@ public class ArgParser {
 		 * @param type
 		 * @throws IllegalArgumentException
 		 */
-		RangeAtom(RangePnt p0, RangePnt p1, int type)
+		public RangeAtom(RangePnt p0, RangePnt p1, int type)
 			throws IllegalArgumentException {
 			int cmp = 0;
 			switch (type) {
@@ -721,7 +714,7 @@ public class ArgParser {
 		 * @param p0
 		 * @throws IllegalArgumentException
 		 */
-		RangeAtom(RangePnt p0) throws IllegalArgumentException {
+		public RangeAtom(RangePnt p0) throws IllegalArgumentException {
 			low = p0;
 		}
 		
@@ -730,7 +723,7 @@ public class ArgParser {
 		 * @param d
 		 * @return
 		 */
-		boolean match(double d) {
+		public boolean match(double d) {
 			int lc = low.compareTo(d);
 			if (high != null) {
 				int hc = high.compareTo(d);
@@ -745,7 +738,7 @@ public class ArgParser {
 		 * @param l
 		 * @return
 		 */
-		boolean match(long l) {
+		public boolean match(long l) {
 			int lc = low.compareTo(l);
 			if (high != null) {
 				int hc = high.compareTo(l);
@@ -760,7 +753,7 @@ public class ArgParser {
 		 * @param s
 		 * @return
 		 */
-		boolean match(String s) {
+		public boolean match(String s) {
 			int lc = low.compareTo(s);
 			if (high != null) {
 				int hc = high.compareTo(s);
@@ -775,7 +768,7 @@ public class ArgParser {
 		 * @param b
 		 * @return
 		 */
-		boolean match(boolean b) {
+		public boolean match(boolean b) {
 			return low.compareTo(b) == 0;
 		}
 		
@@ -794,94 +787,94 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	class Record {
+	private class Record {
 		/**
 		  * 
 		  */
-		NameDesc nameList;
+		private NameDesc nameList;
 		/**
 	    * 
 	    */
-		static final int NOTYPE = 0;
+		public static final int NOTYPE = 0;
 		/**
 	    * 
 	    */
-		static final int BOOLEAN = 1;
+		public static final int BOOLEAN = 1;
 		/**
 	    * 
 	    */
-		static final int CHAR = 2;
+		public static final int CHAR = 2;
 		/**
 	    * 
 	    */
-		static final int INT = 3;
+		public static final int INT = 3;
 		/**
 	    * 
 	    */
-		static final int LONG = 4;
+		public static final int LONG = 4;
 		/**
 	    * 
 	    */
-		static final int FLOAT = 5;
+		public static final int FLOAT = 5;
 		/**
 	    * 
 	    */
-		static final int DOUBLE = 6;
+		public static final int DOUBLE = 6;
 		/**
 	    * 
 	    */
-		static final int STRING = 7;
+		public static final int STRING = 7;
 		/**
 	    * 
 	    */
-		int type;
+		private int type;
 		/**
 	    * 
 	    */
-		int numValues;
+		private int numValues;
 		/**
 	    * 
 	    */
-		boolean vectorResult = false;
+		private boolean vectorResult = false;
 		
 		/**
 	    * 
 	    */
-		String helpMsg = null;
+		private String helpMsg = null;
 		/**
 	    * 
 	    */
-		String valueDesc = null;
+		private String valueDesc = null;
 		/**
 	    * 
 	    */
-		String rangeDesc = null;
+		private String rangeDesc = null;
 		/**
 	    * 
 	    */
-		Object resHolder = null;
+		private Object resHolder = null;
 		/**
 	    * 
 	    */
-		RangeAtom rangeList = null;
+		private RangeAtom rangeList = null;
 		/**
 	    * 
 	    */
-		RangeAtom rangeTail = null;
+		private RangeAtom rangeTail = null;
 		/**
 	    * 
 	    */
-		char convertCode;
+		private char convertCode;
 		/**
 	    * 
 	    */
-		boolean vval = true; // default value for now
+		private boolean vval = true; // default value for now
 		
 		/**
 		 * 
 		 * @return
 		 */
-		NameDesc firstNameDesc() {
+		public NameDesc firstNameDesc() {
 			return nameList;
 		}
 		
@@ -889,7 +882,7 @@ public class ArgParser {
 		 * 
 		 * @return
 		 */
-		RangeAtom firstRangeAtom() {
+		public RangeAtom firstRangeAtom() {
 			return rangeList;
 		}
 		
@@ -897,7 +890,7 @@ public class ArgParser {
 		 * 
 		 * @return
 		 */
-		int numRangeAtoms() {
+		public int numRangeAtoms() {
 			int cnt = 0;
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
 				cnt++;
@@ -909,7 +902,7 @@ public class ArgParser {
 		 * 
 		 * @param ra
 		 */
-		void addRangeAtom(RangeAtom ra) {
+		public void addRangeAtom(RangeAtom ra) {
 			if (rangeList == null) {
 				rangeList = ra;
 			} else {
@@ -923,7 +916,7 @@ public class ArgParser {
 		 * @param d
 		 * @return
 		 */
-		boolean withinRange(double d) {
+		public boolean withinRange(double d) {
 			if (rangeList == null) { return true; }
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
 				if (ra.match(d)) { return true; }
@@ -936,7 +929,7 @@ public class ArgParser {
 		 * @param l
 		 * @return
 		 */
-		boolean withinRange(long l) {
+		public boolean withinRange(long l) {
 			if (rangeList == null) { return true; }
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
 				if (ra.match(l)) { return true; }
@@ -949,7 +942,7 @@ public class ArgParser {
 		 * @param s
 		 * @return
 		 */
-		boolean withinRange(String s) {
+		public boolean withinRange(String s) {
 			if (rangeList == null) { return true; }
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
 				if (ra.match(s)) { return true; }
@@ -962,7 +955,7 @@ public class ArgParser {
 		 * @param b
 		 * @return
 		 */
-		boolean withinRange(boolean b) {
+		public boolean withinRange(boolean b) {
 			if (rangeList == null) { return true; }
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
 				if (ra.match(b)) { return true; }
@@ -974,7 +967,7 @@ public class ArgParser {
 		 * 
 		 * @return
 		 */
-		String valTypeName() {
+		public String valTypeName() {
 			switch (convertCode) {
 				case 'i': {
 					return ("integer");
@@ -1013,7 +1006,7 @@ public class ArgParser {
 		 * @throws ArgParseException
 		 */
 		@SuppressWarnings("unchecked")
-		void scanValue(Object result, String name, String s, int resultIdx)
+		public void scanValue(Object result, String name, String s, int resultIdx)
 			throws ArgParseException {
 			double dval = 0;
 			String sval = null;
@@ -1931,7 +1924,7 @@ public class ArgParser {
 	 * @param arg
 	 * @return
 	 */
-	Object getResultHolder(String arg) {
+	protected Object getResultHolder(String arg) {
 		Record rec = getRecord(arg, null);
 		return (rec != null) ? rec.resHolder : null;
 	}
@@ -1941,7 +1934,7 @@ public class ArgParser {
 	 * @param arg
 	 * @return
 	 */
-	String getOptionName(String arg) {
+	protected String getOptionName(String arg) {
 		ArgHolder<Object> ndescHolder = new ArgHolder<Object>(Object.class);
 		Record rec = getRecord(arg, ndescHolder);
 		return (rec != null) ? ((NameDesc) ndescHolder.getValue()).name : null;
@@ -1952,7 +1945,7 @@ public class ArgParser {
 	 * @param arg
 	 * @return
 	 */
-	String getOptionRangeDesc(String arg) {
+	protected String getOptionRangeDesc(String arg) {
 		Record rec = getRecord(arg, null);
 		return (rec != null) ? rec.rangeDesc : null;
 	}
@@ -1962,7 +1955,7 @@ public class ArgParser {
 	 * @param arg
 	 * @return
 	 */
-	String getOptionTypeName(String arg) {
+	protected String getOptionTypeName(String arg) {
 		Record rec = getRecord(arg, null);
 		return (rec != null) ? rec.valTypeName() : null;
 	}
@@ -2020,7 +2013,7 @@ public class ArgParser {
 	 * @param allowQuotedStrings
 	 * @throws StringScanException
 	 */
-	static void stringToArgs(Vector<String> vec, String s,
+	public static void stringToArgs(Vector<String> vec, String s,
 		boolean allowQuotedStrings) throws StringScanException {
 		StringScanner scanner = new StringScanner(s);
 		scanner.skipWhiteSpace();
