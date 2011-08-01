@@ -183,57 +183,57 @@ public class ArgParserTest {
 		 * @param ra
 		 */
 		void check(ArgParser.RangeAtom ra) {
-			verify((ra.low == null) == (low == null), "(ra.low==null)="
-					+ (ra.low == null) + "(low==null)=" + (low == null));
-			verify((ra.high == null) == (high == null), "(ra.high==null)="
-					+ (ra.high == null) + "(high==null)=" + (high == null));
+			verify((ra.getLow() == null) == (low == null), "(ra.low==null)="
+					+ (ra.getLow()== null) + "(low==null)=" + (low == null));
+			verify((ra.getHigh()== null) == (high == null), "(ra.high==null)="
+					+ (ra.getHigh()== null) + "(high==null)=" + (high == null));
 			
-			if (ra.low != null) {
+			if (ra.getLow()!= null) {
 				switch (type) {
 					case 'l': {
-						verify(ra.low.lval == low.lval, "ra.low=" + ra.low + " low=" + low);
+						verify(ra.getLow().lval == low.lval, "ra.low=" + ra.getLow()+ " low=" + low);
 						break;
 					}
 					case 'd': {
-						verify(ra.low.dval == low.dval, "ra.low=" + ra.low + " low=" + low);
+						verify(ra.getLow().dval == low.dval, "ra.low=" + ra.getLow()+ " low=" + low);
 						break;
 					}
 					case 's': {
-						verify(ra.low.sval.equals(low.sval), "ra.low=" + ra.low + " low="
+						verify(ra.getLow().sval.equals(low.sval), "ra.low=" + ra.getLow()+ " low="
 								+ low);
 						break;
 					}
 					case 'b': {
-						verify(ra.low.bval == low.bval, "ra.low=" + ra.low + " low=" + low);
+						verify(ra.getLow().bval == low.bval, "ra.low=" + ra.getLow()+ " low=" + low);
 						break;
 					}
 				}
-				verify(ra.low.closed == low.closed, "ra.low=" + ra.low + " low=" + low);
+				verify(ra.getLow().closed == low.closed, "ra.low=" + ra.getLow()+ " low=" + low);
 			}
-			if (ra.high != null) {
+			if (ra.getHigh()!= null) {
 				switch (type) {
 					case 'l': {
-						verify(ra.high.lval == high.lval, "ra.high=" + ra.high + " high="
+						verify(ra.getHigh().lval == high.lval, "ra.high=" + ra.getHigh()+ " high="
 								+ high);
 						break;
 					}
 					case 'd': {
-						verify(ra.high.dval == high.dval, "ra.high=" + ra.high + " high="
+						verify(ra.getHigh().dval == high.dval, "ra.high=" + ra.getHigh()+ " high="
 								+ high);
 						break;
 					}
 					case 's': {
-						verify(ra.high.sval.equals(high.sval), "ra.high=" + ra.high
+						verify(ra.getHigh().sval.equals(high.sval), "ra.high=" + ra.getHigh()
 								+ " high=" + high);
 						break;
 					}
 					case 'b': {
-						verify(ra.high.bval == high.bval, "ra.high=" + ra.high + " high="
+						verify(ra.getHigh().bval == high.bval, "ra.high=" + ra.getHigh()+ " high="
 								+ high);
 						break;
 					}
 				}
-				verify(ra.high.closed == high.closed, "ra.high=" + ra.high + " high="
+				verify(ra.getHigh().closed == high.closed, "ra.high=" + ra.getHigh()+ " high="
 						+ high);
 			}
 		}
@@ -377,22 +377,22 @@ public class ArgParserTest {
 		if (!exceptionThrown) {
 			verify(errmsg == null, "Expecting exception " + errmsg);
 			ArgParser.Record rec = parser.lastMatchRecord();
-			verify(rec.convertCode == code, "code=" + rec.convertCode
+			verify(rec.getConvertCode() == code, "code=" + rec.getConvertCode()
 					+ ", expecting " + code);
 			ArgParser.NameDesc nd;
 			int i = 0;
-			for (nd = rec.firstNameDesc(); nd != null; nd = nd.next) {
+			for (nd = rec.firstNameDesc(); nd != null; nd = nd.getNext()) {
 				i++;
 			}
 			verify(i == namelist.length, "numNames=" + i + ", expecting "
 					+ namelist.length);
 			i = 0;
-			for (nd = rec.firstNameDesc(); nd != null; nd = nd.next) {
+			for (nd = rec.firstNameDesc(); nd != null; nd = nd.getNext()) {
 				String ss;
-				if (!nd.oneWord) {
-					ss = new String(nd.name) + ' ';
+				if (!nd.isOneWord()) {
+					ss = new String(nd.getName()) + ' ';
 				} else {
-					ss = nd.name;
+					ss = nd.getName();
 				}
 				verify(ss.equals(namelist[i]), "have name '" + ss + "', expecting '"
 						+ namelist[i] + "'");
@@ -400,7 +400,7 @@ public class ArgParserTest {
 			}
 			ArgParser.RangeAtom ra;
 			i = 0;
-			for (ra = rec.firstRangeAtom(); ra != null; ra = ra.next) {
+			for (ra = rec.firstRangeAtom(); ra != null; ra = ra.getNext()) {
 				i++;
 			}
 			int expectedRangeNum = 0;
@@ -410,12 +410,12 @@ public class ArgParserTest {
 			verify(i == expectedRangeNum, "numRangeAtoms=" + i + ", expecting "
 					+ expectedRangeNum);
 			i = 0;
-			for (ra = rec.firstRangeAtom(); ra != null; ra = ra.next) {
+			for (ra = rec.firstRangeAtom(); ra != null; ra = ra.getNext()) {
 				rngCheck[i++].check(ra);
 			}
-			verify(rec.helpMsg.equals(helpMsg), "helpMsg=" + rec.helpMsg
+			verify(rec.getHelpMsg().equals(helpMsg), "helpMsg=" + rec.getHelpMsg()
 					+ ", expecting " + helpMsg);
-			verify(rec.numValues == numValues, "numValues=" + rec.numValues
+			verify(rec.getNumValues() == numValues, "numValues=" + rec.getNumValues()
 					+ ", expecting " + numValues);
 		}
 	}

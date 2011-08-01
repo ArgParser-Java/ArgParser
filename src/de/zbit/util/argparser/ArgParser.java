@@ -20,6 +20,7 @@ import java.io.LineNumberReader;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Vector;
 
 import de.zbit.util.ConsoleTools;
@@ -99,7 +100,7 @@ import de.zbit.util.StringUtil;
  * argparser.DoubleHolder DoubleHolder} or {@link argparser.StringHolder
  * StringHolder}), an array of the appropriate type, or
  * <a href=#multipleOptionInvocation> an instance of 
- * <code>java.util.Vector</code></a>.
+ * {@link Vector}</a>.
  *
  * <p>By default, arguments that don't match the specified options, are <a
  * href=#rangespec>out of range</a>, or are otherwise formatted incorrectly,
@@ -230,7 +231,7 @@ import de.zbit.util.StringUtil;
  *
  * However, the application can instead arrange for the storage of <i>all</i>
  * values associated with multiple option invocation, by supplying a instance
- * of <code>java.util.Vector</code> to serve as the value holder. Then every
+ * of {@link Vector} to serve as the value holder. Then every
  * time the option appears in the argument list, the parser will create a value
  * holder of appropriate type, set it to the current value, and store the
  * holder in the vector. For example, the construction
@@ -389,7 +390,7 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	private Vector<Record> matchList;
+	private List<Record> matchList;
 	//	int tabSpacing = 8;
 	/**
    * 
@@ -456,20 +457,41 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	private static class NameDesc {
+	static class NameDesc {
 		/**
 		 * 
 		 */
-		String name;
+		private String name;
 		/**
 		 * oneWord implies that any value associated with option is concatenated
 		 * onto the argument string itself
 		 */
-		boolean oneWord;
+		private boolean oneWord;
 		/**
 		 * 
 		 */
-		NameDesc next = null;
+		private NameDesc next = null;
+		
+		/**
+		 * @return the name
+		 */
+		public String getName() {
+			return name;
+		}
+		
+		/**
+		 * @return the oneWord
+		 */
+		public boolean isOneWord() {
+			return oneWord;
+		}
+		
+		/**
+		 * @return the next
+		 */
+		public NameDesc getNext() {
+			return next;
+		}
 	}
 
 	/**
@@ -665,6 +687,27 @@ public class ArgParser {
 		 */
 		private RangePnt low = null;
 		/**
+		 * @return the low
+		 */
+		public RangePnt getLow() {
+			return low;
+		}
+
+		/**
+		 * @return the high
+		 */
+		public RangePnt getHigh() {
+			return high;
+		}
+
+		/**
+		 * @return the next
+		 */
+		public RangeAtom getNext() {
+			return next;
+		}
+
+		/**
 	    * 
 	    */
 		private RangePnt high = null;
@@ -787,7 +830,7 @@ public class ArgParser {
 	/**
 	 * 
 	 */
-	private class Record {
+	class Record {
 		/**
 		  * 
 		  */
@@ -849,6 +892,27 @@ public class ArgParser {
 	    * 
 	    */
 		private String rangeDesc = null;
+		/**
+		 * @return the numValues
+		 */
+		public int getNumValues() {
+			return numValues;
+		}
+
+		/**
+		 * @return the helpMsg
+		 */
+		public String getHelpMsg() {
+			return helpMsg;
+		}
+
+		/**
+		 * @return the convertCode
+		 */
+		public char getConvertCode() {
+			return convertCode;
+		}
+
 		/**
 	    * 
 	    */
@@ -1884,8 +1948,8 @@ public class ArgParser {
 	 * 
 	 * @return
 	 */
-	Record lastMatchRecord() {
-		return (Record) matchList.lastElement();
+	public Record lastMatchRecord() {
+		return matchList.get(matchList.size() - 1);
 	}
 	
 	/**
