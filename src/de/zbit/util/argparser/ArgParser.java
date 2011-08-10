@@ -1738,9 +1738,8 @@ public class ArgParser {
 			ndesc.oneWord = !nameEndsInWhiteSpace;
 		} while (c != '%');
 		
-		if (nameTail == null) { 
-			throw new IllegalArgumentException(
-			"Null option name given"); 
+		if (nameTail == null) {
+			throw new IllegalArgumentException("Null option name given"); 
 		}
 		if (!nameTail.oneWord) {
 			for (ndesc = rec.nameList; ndesc != null; ndesc = ndesc.next) {
