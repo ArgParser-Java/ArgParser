@@ -874,12 +874,7 @@ public class ArgParser {
 		/**
 	    * 
 	    */
-		private int numValues;
-		/**
-	    * 
-	    */
-		private boolean vectorResult = false;
-		
+		private int numValues;	
 		/**
 	    * 
 	    */
@@ -1758,7 +1753,6 @@ public class ArgParser {
 		rec.convertCode = c;
 		
 		if (resHolder instanceof Vector<?>) {
-			rec.vectorResult = true;
 			rec.type = defaultResultType(rec.convertCode);
 		} else {
 			switch (rec.convertCode) {
