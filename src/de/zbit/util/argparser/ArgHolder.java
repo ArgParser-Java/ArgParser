@@ -34,12 +34,59 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	private static final long serialVersionUID = 5362889114277649711L;
 	
 	/**
-	 * 
+	 * Default: <code>false</code>.
 	 * @return
 	 */
 	public static final ArgHolder<Boolean> createBooleanHolder() {
-		// TODO: Create more factory methods.
 		return new ArgHolder<Boolean>(Boolean.FALSE);
+	}
+	
+	/**
+	 * Default: <code>NaN</code>
+	 * @return
+	 */
+	public static final ArgHolder<Double> createDoubleHolder() {
+	  return new ArgHolder<Double>(Double.NaN);
+	}
+	
+	/**
+	 * Default: <code>NaN</code>
+	 * @return
+	 */
+	public static final ArgHolder<Float> createFloatHolder() {
+	  return new ArgHolder<Float>(Float.NaN);
+	}
+	
+	/**
+	 * Default: <code>null</code>
+	 * @return
+	 */
+	public static final ArgHolder<Integer> createIntHolder() {
+	  return new ArgHolder<Integer>(Integer.class);
+	}
+	
+	/**
+	 * Default: <code>null</code>
+	 * @return
+	 */
+	public static final ArgHolder<Long> createLongHolder() {
+	  return new ArgHolder<Long>(Long.class);
+	}
+	
+	/**
+	 * Default: <code>null</code>
+	 * @return
+	 */
+	public static final ArgHolder<Short> createShortHolder() {
+	  return new ArgHolder<Short>(Short.class);
+	}
+	
+	/**
+	 * Default: <code>null</code>
+	 * @return
+	 */
+	public static final ArgHolder<String> createStringHolder() {
+	  return new ArgHolder<String>(String.class);
 	}
 	
 	/**
