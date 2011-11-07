@@ -2261,7 +2261,7 @@ public class ArgParser {
 		if (unmatched.size() == 0) {
 			return null;
 		} else {
-			return (String[]) unmatched.toArray(new String[0]);
+			return unmatched.toArray(new String[0]);
 		}
 	}
 	
@@ -2333,9 +2333,10 @@ public class ArgParser {
 					rec.scanValue(result, ndesc.name, args[idx].substring(ndesc.name
 							.length()), 0);
 				} else {
-					if (idx + rec.numValues >= args.length) { throw new ArgParseException(
-						ndesc.name, "requires " + rec.numValues + " value"
-								+ (rec.numValues > 1 ? "s" : "")); }
+          if (idx + rec.numValues >= args.length) {
+            throw new ArgParseException(String.format("%s requires %d value%s.",
+              ndesc.name, rec.numValues, (rec.numValues > 1 ? "s" : "")));
+          }
 					for (int k = 0; k < rec.numValues; k++) {
 						rec.scanValue(result, ndesc.name, args[++idx], k);
 					}
