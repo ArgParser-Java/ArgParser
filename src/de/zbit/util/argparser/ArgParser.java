@@ -930,6 +930,12 @@ public class ArgParser {
 		private boolean vval = true; // default value for now
 		
 		/**
+		 * Decides whether or not this option should be visible in the command-line
+		 * help description.
+		 */
+		private boolean isVisible = true;
+		
+		/**
 		 * 
 		 * @return
 		 */
@@ -976,9 +982,13 @@ public class ArgParser {
 		 * @return
 		 */
 		public boolean withinRange(double d) {
-			if (rangeList == null) { return true; }
+			if (rangeList == null) {
+				return true; 
+			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.match(d)) { return true; }
+				if (ra.match(d)) {
+					return true;
+				}
 			}
 			return false;
 		}
@@ -989,9 +999,13 @@ public class ArgParser {
 		 * @return
 		 */
 		public boolean withinRange(long l) {
-			if (rangeList == null) { return true; }
+			if (rangeList == null) {
+				return true;
+			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.match(l)) { return true; }
+				if (ra.match(l)) {
+					return true;
+				}
 			}
 			return false;
 		}
@@ -1002,9 +1016,13 @@ public class ArgParser {
 		 * @return
 		 */
 		public boolean withinRange(String s) {
-			if (rangeList == null) { return true; }
+			if (rangeList == null) {
+				return true;
+			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.match(s)) { return true; }
+				if (ra.match(s)) {
+					return true;
+				}
 			}
 			return false;
 		}
@@ -1015,9 +1033,13 @@ public class ArgParser {
 		 * @return
 		 */
 		public boolean withinRange(boolean b) {
-			if (rangeList == null) { return true; }
+			if (rangeList == null) {
+				return true;
+			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.match(b)) { return true; }
+				if (ra.match(b)) {
+					return true;
+				}
 			}
 			return false;
 		}
@@ -1072,8 +1094,10 @@ public class ArgParser {
 			long lval = 0;
 			boolean bval = false;
 			
-			if (s.length() == 0) { throw new ArgParseException(name,
-				"requires a contiguous value"); }
+			if (s.length() == 0) { 
+				throw new ArgParseException(name,
+				"requires a contiguous value"); 
+			}
 			StringScanner scanner = new StringScanner(s);
 			try {
 				switch (convertCode) {
@@ -1206,6 +1230,22 @@ public class ArgParser {
 					}
 				}
 			}
+		}
+
+		/**
+		 * @return
+		 */
+		public boolean isVisible() {
+			return isVisible;
+		}
+		
+		/**
+		 * 
+		 * @param visible
+		 * @return
+		 */
+		public void setVisible(boolean visible) {
+			isVisible = visible;
 		}
 	}
 	
@@ -1365,14 +1405,6 @@ public class ArgParser {
 	public void setHelpIndentation(int indent) {
 		helpIndent = indent;
 	}
-
-//  	public void setTabSpacing (int n)
-//  	 { tabSpacing = n;
-//  	 }
-
-//  	public int getTabSpacing ()
-//  	 { return tabSpacing;
-//  	 }
 
 	/**
 	 * 
@@ -1683,11 +1715,13 @@ public class ArgParser {
 	 * @param spec the specification string
 	 * @param resHolder object in which to store the associated
 	 * value
+   * @param visible decides whether or not this option should be
+   *   displayed in the command-line help.
 	 * @throws IllegalArgumentException if there is an error in
 	 * the specification or if the result holder is of an invalid
 	 * type.  
 	 */
-	public void addOption(String spec, Object resHolder)
+	public void addOption(String spec, Object resHolder, boolean visible)
 		throws IllegalArgumentException {
 		// null terminated string is easier to parse
 		StringScanner scanner = new StringScanner(spec);
@@ -1704,8 +1738,7 @@ public class ArgParser {
 			scanner.skipWhiteSpace();
 			i0 = scanner.getIndex();
 			while (!Character.isWhitespace(c = scanner.getc()) && c != ','
-					&& c != '%' && c != '\000')
-				;
+					&& c != '%' && c != '\000');
 			i1 = scanner.getIndex();
 			if (c != '\000') {
 				i1--;
@@ -1733,9 +1766,6 @@ public class ArgParser {
 			ndesc.oneWord = !nameEndsInWhiteSpace;
 		} while (c != '%');
 		
-		if (nameTail == null) {
-			throw new IllegalArgumentException("Null option name given"); 
-		}
 		if (!nameTail.oneWord) {
 			for (ndesc = rec.nameList; ndesc != null; ndesc = ndesc.next) {
 				ndesc.oneWord = false;
@@ -1747,8 +1777,9 @@ public class ArgParser {
 			"No conversion character given"); 
 		}
 		if (validConversionCodes.indexOf(c) == -1) { 
-			throw new IllegalArgumentException(
-			"Conversion code '" + c + "' not one of '" + validConversionCodes + "'"); 
+      throw new IllegalArgumentException(String.format(
+      	"Conversion code '%s' not one of '%s'", c,
+				validConversionCodes)); 
 		}
 		rec.convertCode = c;
 		
@@ -1934,7 +1965,22 @@ public class ArgParser {
 			matchList.remove(defaultHelpOption);
 			firstHelpOption = rec;
 		}
+		rec.setVisible(visible);
 		matchList.add(rec);
+	}
+	
+	/**
+	 * Adds an option to the arg-parser that will be displayed in the command-line
+	 * help if a help string is available.
+	 * 
+	 * @param spec
+	 * @param resHolder
+	 * @throws IllegalArgumentException
+	 * @see {@link #addOption(String, Object, boolean)}
+	 */
+	public void addOption(String spec, Object resHolder)
+		throws IllegalArgumentException {
+		addOption(spec, resHolder, true);
 	}
 	
 	/**
@@ -2309,7 +2355,7 @@ public class ArgParser {
 		try {
 			ArgHolder<Object> ndescHolder = new ArgHolder<Object>(Object.class);
 			Record rec = getRecord(args[idx], ndescHolder);
-			if ((rec == null) || (rec.convertCode == 'h' && !helpOptionsEnabled)) { 
+			if ((rec == null) || ((rec.convertCode == 'h') && !helpOptionsEnabled)) { 
 				// didn't match
 				unmatchedArg = new String(args[idx]);
 				return idx + 1;
@@ -2352,7 +2398,7 @@ public class ArgParser {
 				}
 			}
 			if (rec.resHolder instanceof Vector<?>) {
-				((Vector) rec.resHolder).add(result);
+				((Vector<Object>) rec.resHolder).add(result);
 			}
 		} catch (ArgParseException e) {
 			setError(e.getMessage());
@@ -2443,6 +2489,9 @@ public class ArgParser {
 		for (int i = 0; i < matchList.size(); i++) {
 			StringBuilder optionInfo = new StringBuilder();
 			rec = matchList.get(i);
+			if (!rec.isVisible()) {
+				continue;
+			}
 			if ((rec.convertCode == 'h') && !helpOptionsEnabled) {
 				continue;
 			}
