@@ -90,6 +90,14 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
+	 * @param def default parameter, must not be null
+	 * @return
+	 */
+	public static final ArgHolder<String> createStringHolder(String def) {
+	  return new ArgHolder<String>(def);
+	}
+	
+	/**
 	 * The type of argument.
 	 */
 	private Class<V> clazz;
@@ -194,6 +202,16 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	 */
 	public V getValue() {
 		return value;
+	}
+	
+	/**
+	 * @return the {@link #value} if it is set, the default otherwise
+	 */
+	public V getFinalValue() {
+	  if( isSetValue() ) {
+	    return value;
+	  }
+	  return defaultValue;
 	}
 	
 	/* (non-Javadoc)
