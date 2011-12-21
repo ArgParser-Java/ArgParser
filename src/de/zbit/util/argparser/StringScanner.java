@@ -529,7 +529,7 @@ class StringScanner {
 		}
 		int i = 0;
 		for (i = 0; i < testStr.length(); i++) {
-			if (testStr.charAt(i) != buf[idx]) {
+			if (Character.toLowerCase(testStr.charAt(i)) != buf[idx]) {
 				if (idx == len) {
 					exception = new StringScanException(idx, "end of input");
 				}
