@@ -382,6 +382,7 @@ import de.zbit.util.StringUtil;
  *
  * @author John E. Lloyd
  * @author Andreas Dr&auml;ger
+ * @author Clemens Wrzodek
  * @since Fall 2004
  * @version $Rev$
  */
@@ -1095,8 +1096,7 @@ public class ArgParser {
 			boolean bval = false;
 			
 			if (s.length() == 0) { 
-				throw new ArgParseException(name,
-				"requires a contiguous value"); 
+				throw new ArgParseException(name, "requires a contiguous value"); 
 			}
 			StringScanner scanner = new StringScanner(s);
 			try {

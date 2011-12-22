@@ -516,12 +516,12 @@ class StringScanner {
 	public boolean scanBoolean() throws StringScanException {
 		StringScanException exception = null;
 		int idxSave = idx;
-		String testStr = "false";
+		String testStr = "false"; // MUST BE LOWERCASE
 		boolean testval = false;
 		char c;
 		
 		skipWhiteSpace();
-		if (buf[idx] == 't') {
+		if (Character.toLowerCase(buf[idx]) == 't') {
 			testStr = "true";
 			testval = true;
 		} else {
@@ -529,7 +529,7 @@ class StringScanner {
 		}
 		int i = 0;
 		for (i = 0; i < testStr.length(); i++) {
-			if (Character.toLowerCase(testStr.charAt(i)) != buf[idx]) {
+			if (testStr.charAt(i) != Character.toLowerCase(buf[idx])) {
 				if (idx == len) {
 					exception = new StringScanException(idx, "end of input");
 				}
