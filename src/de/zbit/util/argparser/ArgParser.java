@@ -1040,7 +1040,7 @@ public class ArgParser {
 				return true;
 			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.matchIgnoreCase(s)) {
+				if (ra.match(s)) {
 					return true;
 				}
 			}

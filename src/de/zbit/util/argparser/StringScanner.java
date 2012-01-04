@@ -552,14 +552,14 @@ class StringScanner {
 	
 	/**
 	 * Matches the string to the current buffer
-	 * case insensitive.
+	 * case sensitive (else, enums, etc. don't work anymore).
 	 * @param s
 	 * @return
 	 */
 	public boolean matchString(String s) {
 		int k = idx;
 		for (int i = 0; i < s.length(); i++) {
-			if (k >= len || Character.toUpperCase(s.charAt(i)) != Character.toUpperCase(buf[k++])) { return false; }
+			if (k >= len || s.charAt(i) != buf[k++]) { return false; }
 		}
 		idx = k;
 		return true;
