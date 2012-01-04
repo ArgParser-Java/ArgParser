@@ -658,6 +658,15 @@ public class ArgParser {
 			return sval.compareTo(s);
 		}
 		
+    /**
+     * 
+     * @param s
+     * @return
+     */
+    public int compareToIgnoreCase(String s) {
+      return sval.toUpperCase().compareTo(s.toUpperCase());
+    }
+		
 		/**
 		 * 
 		 * @param b
@@ -806,6 +815,16 @@ public class ArgParser {
 				return lc == 0;
 			}
 		}
+		
+    public boolean matchIgnoreCase(String s) {
+      int lc = low.compareToIgnoreCase(s);
+      if (high != null) {
+        int hc = high.compareToIgnoreCase(s);
+        return (lc * hc < 0 || (low.closed && lc == 0) || (high.closed && hc == 0));
+      } else {
+        return lc == 0;
+      }
+    }
 		
 		/**
 		 * 
@@ -1021,7 +1040,7 @@ public class ArgParser {
 				return true;
 			}
 			for (RangeAtom ra = rangeList; ra != null; ra = ra.next) {
-				if (ra.match(s)) {
+				if (ra.matchIgnoreCase(s)) {
 					return true;
 				}
 			}
