@@ -2567,7 +2567,7 @@ public class ArgParser {
 				s.append(spaceString(pad));
 				s.append(StringUtil.insertLineBreaksAndCount(rec.helpMsg, 
 					ConsoleTools.getColumns() - helpIndent, 
-					'\n' + StringUtil.fill("", helpIndent, ' ', false), true).getA());
+					"\n", StringUtil.fill("", helpIndent, ' ', false), true).getA());
 			}
 			s.append('\n');
 		}
