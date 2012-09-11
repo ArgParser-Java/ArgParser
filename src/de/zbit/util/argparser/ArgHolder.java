@@ -34,7 +34,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	private static final long serialVersionUID = 5362889114277649711L;
 	
 	/**
-	 * Default: <code>false</code>.
+	 * Default: {@code false}.
 	 * @return
 	 */
 	public static final ArgHolder<Boolean> createBooleanHolder() {
@@ -58,7 +58,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>null</code>
+	 * Default: {@code null}
 	 * @return
 	 */
 	public static final ArgHolder<Integer> createIntHolder() {
@@ -66,7 +66,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>null</code>
+	 * Default: {@code null}
 	 * @return
 	 */
 	public static final ArgHolder<Long> createLongHolder() {
@@ -74,7 +74,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>null</code>
+	 * Default: {@code null}
 	 * @return
 	 */
 	public static final ArgHolder<Short> createShortHolder() {
@@ -82,7 +82,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>null</code>
+	 * Default: {@code null}
 	 * @return
 	 */
 	public static final ArgHolder<String> createStringHolder() {
@@ -235,8 +235,8 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	/**
 	 * Check if a value has been set.
 	 * 
-	 * @return <code>true</code> if the {@link #value} in this {@link ArgHolder}
-	 *         is not null, <code>false</code> otherwise.
+	 * @return {@code true} if the {@link #value} in this {@link ArgHolder}
+	 *         is not null, {@code false} otherwise.
 	 */
 	public boolean isSetValue() {
 		return value != null;

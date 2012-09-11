@@ -1366,7 +1366,7 @@ public class ArgParser {
 	 * ignored.
 	 * 
 	 * @param enable
-	 *        enables help options if <code>true</code>.
+	 *        enables help options if {@code true}.
 	 * @see ArgParser#getHelpOptionsEnabled
 	 * @see ArgParser#addOption
 	 * @see ArgParser#setDefaultPrintStream
@@ -1558,20 +1558,20 @@ public class ArgParser {
 	 * escape sequences (such as <code>\n</code> or <code>\007</code>),
 	 * and optionally enclosed in single quotes
 	 * <tr valign=top>
-	 * <td><code>%b</code></td><td>a boolean value (<code>true</code>
-	 * or <code>false</code>)</td>
+	 * <td><code>%b</code></td><td>a boolean value ({@code true}
+	 * or {@code false})</td>
 	 * <tr valign=top>
 	 * <td><code>%s</code></td><td>a string. This will
 	 * be the argument string itself (or its remainder, in
 	 * the case of a single word option)</td>
 	 * <tr valign=top>
 	 * <td><code>%v</code></td><td>no explicit value is expected,
-	 * but a boolean value of <code>true</code> (by default)
+	 * but a boolean value of {@code true} (by default)
 	 * will be stored into the associated result holder if this
 	 * option is matched. If one wishes to have a value of
-	 * <code>false</code> stored instead, then the <code>%v</code>
+	 * {@code false} stored instead, then the <code>%v</code>
 	 * should be followed by a "range spec" containing
-	 * <code>false</code>, as in <code>%v{false}</code>.
+	 * {@code false}, as in <code>%v{false}</code>.
 	 * </table>
 	 *
 	 * <p><li><var>rangeSpec</var> is an optional range specification,
@@ -2159,7 +2159,7 @@ public class ArgParser {
 	 *        Reader from which to read the strings
 	 * @param args
 	 *        Initial set of argument values. Can be specified as
-	 *        <code>null</code>.
+	 *        {@code null}.
 	 * @throws IOException
 	 *         if an error occured while reading.
 	 */
@@ -2205,7 +2205,7 @@ public class ArgParser {
 	 *        File to be read
 	 * @param args
 	 *        Initial set of argument values. Can be specified as
-	 *        <code>null</code>.
+	 *        {@code null}.
 	 * @throws IOException
 	 *         if an error occured while reading the file.
 	 */
@@ -2298,7 +2298,7 @@ public class ArgParser {
 	 * @param exitFlags
 	 *        conditions causing the program to exit. Should be an or-ed
 	 *        combintion of {@link #EXIT_ON_ERROR} or {@link #EXIT_ON_UNMATCHED}.
-	 * @return array of arguments that were not matched, or <code>null</code> if
+	 * @return array of arguments that were not matched, or {@code null} if
 	 *         all arguments were successfully matched
 	 * @see ArgParser#getErrorMessage
 	 * @see ArgParser#getDefaultPrintStream
@@ -2346,7 +2346,7 @@ public class ArgParser {
 	 * {@link #getUnmatchedArgument getUnmatchedArgument} will return a copy of
 	 * the unmatched argument. If an argument is matched,
 	 * {@link #getUnmatchedArgument getUnmatchedArgument} will return
-	 * <code>null</code>.
+	 * {@code null}.
 	 * 
 	 * <p>
 	 * If help options are enabled and the argument matches a help option, then
@@ -2577,7 +2577,7 @@ public class ArgParser {
 	/**
 	 * Returns the parser's error message. This is automatically set whenever an
 	 * error is encountered in <code>matchArg</code> or <code>matchAllArgs</code>,
-	 * and is automatically set to <code>null</code> at the beginning of these
+	 * and is automatically set to {@code null} at the beginning of these
 	 * methods.
 	 * 
 	 * @return error message
@@ -2589,7 +2589,7 @@ public class ArgParser {
 	/**
 	 * Returns the value of an unmatched argument discovered {@link #matchArg
 	 * matchArg} or {@link #matchAllArgs(String[],int,int) matchAllArgs}. If there
-	 * was no unmatched argument, <code>null</code> is returned.
+	 * was no unmatched argument, {@code null} is returned.
 	 * 
 	 * @return unmatched argument
 	 */
