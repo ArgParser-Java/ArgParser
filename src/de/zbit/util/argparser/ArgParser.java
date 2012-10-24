@@ -855,9 +855,14 @@ public class ArgParser {
 		  * 
 		  */
 		private NameDesc nameList;
-		/**
-	    * 
-	    */
+
+    /**
+     * Delimiter for grouping options
+     */
+    public static final int DELIM = -1;
+    /**
+	   * 
+	   */
 		public static final int NOTYPE = 0;
 		/**
 	    * 
@@ -2002,6 +2007,19 @@ public class ArgParser {
 		addOption(spec, resHolder, true);
 	}
 	
+	public void addDelimiter(String text) {
+	  
+	  NameDesc ndesc = new NameDesc();
+	  ndesc.name = text;
+	  // ndesc.oneWord = false;
+	  
+	  Record rec = new Record();
+	  rec.type = Record.DELIM;
+	  rec.nameList = ndesc;
+	  
+	  matchList.add(rec);
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -2505,15 +2523,31 @@ public class ArgParser {
 		
 		s.append(String.format("Usage: %s\n", synopsisString));
 		s.append("Options include:\n\n");
+		
+		// iterate over all options in forms of records
 		for (int i = 0; i < matchList.size(); i++) {
 			StringBuilder optionInfo = new StringBuilder();
 			rec = matchList.get(i);
+
+			// if the record is not visible, skip it
 			if (!rec.isVisible()) {
 				continue;
 			}
+			
+			// if the record represents the 'help' option, but help options are
+			// disabled, skip it
 			if ((rec.convertCode == 'h') && !helpOptionsEnabled) {
 				continue;
 			}
+			
+			// if the record is a delimiter, print it and continue to the next record
+			if (rec.type == Record.DELIM) {
+        s.append('\n');
+			  s.append(rec.nameList.name);
+			  s.append('\n');
+			  continue;
+			}
+			
 			for (ndesc = rec.nameList; ndesc != null; ndesc = ndesc.next) {
 				if (ndesc.oneWord) {
 					hasOneWordAlias = true;
