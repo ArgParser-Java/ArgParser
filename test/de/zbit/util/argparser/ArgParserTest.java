@@ -1306,7 +1306,8 @@ public class ArgParserTest {
 		test.checkAdd("-boov %b", vec, 'b', 1, "-boov ", null, "", null);
 		tests = new MTest[] { new MTest("-boov true", new Boolean(true), 0),
 				new MTest("-boov false", new Boolean(false), 1),
-				new MTest("-boov true", new Boolean(true), 2), };
+				new MTest("-boov true", new Boolean(true), 2),
+				new MTest("-boov", new Boolean(true), 3),};
 		vec.clear();
 		test.checkMatches(tests, MULTI_WORD);
 		

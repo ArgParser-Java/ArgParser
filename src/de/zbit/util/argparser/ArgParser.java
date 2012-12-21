@@ -2416,13 +2416,42 @@ public class ArgParser {
 					rec.scanValue(result, ndesc.name, args[idx].substring(ndesc.name
 							.length()), 0);
 				} else {
-          if (idx + rec.numValues >= args.length) {
-            throw new ArgParseException(ndesc.name, String.format("requires %d value%s",
-              rec.numValues, (rec.numValues > 1 ? "s" : "")));
-          }
-					for (int k = 0; k < rec.numValues; k++) {
-						rec.scanValue(result, ndesc.name, args[++idx], k);
-					}
+				  if (rec.convertCode != 'b' ) {
+				    if (idx + rec.numValues >= args.length) {
+				      throw new ArgParseException(ndesc.name, String.format("requires %d value%s",
+				          rec.numValues, (rec.numValues > 1 ? "s" : "")));
+				    }
+				    for (int k = 0; k < rec.numValues; k++) {
+				      rec.scanValue(result, ndesc.name, args[++idx], k);
+				    }
+				  } else {
+				    // special handling of %b to allow for omitting 'true'
+            if (idx + rec.numValues >= args.length) {
+              // last option followed by nothing, so its 'true'
+              ((ArgHolder<Boolean>) result).setValue(true);
+            } else if (rec.numValues > 1) {
+              // more than one value, must be a boolean array, proceed as usual
+              for (int k = 0; k < rec.numValues; k++) {
+                rec.scanValue(result, ndesc.name, args[++idx], k);
+              }
+            } else {
+              // only one expected value
+              try {
+                // try to parse it
+                rec.scanValue(result, ndesc.name, args[++idx], 0);
+              } catch(ArgParseException e) {
+                // if it fails with a "malformed boolean" exception
+                if (e.getMessage().contains("malformed boolean")) {
+                  // assume that it was omitted and treat it as 'true'
+                  ((ArgHolder<Boolean>) result).setValue(true);
+                  // and decrement the idx again for correct parsing again
+                  idx--;
+                } else {
+                  throw e;
+                }
+              }
+            }
+				  }
 				}
 			} else {
 				if (((rec.resHolder instanceof ArgHolder<?>) && ((ArgHolder<?>) rec.resHolder)
