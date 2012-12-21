@@ -2417,8 +2417,8 @@ public class ArgParser {
 							.length()), 0);
 				} else {
           if (idx + rec.numValues >= args.length) {
-            throw new ArgParseException(String.format("%s requires %d value%s.",
-              ndesc.name, rec.numValues, (rec.numValues > 1 ? "s" : "")));
+            throw new ArgParseException(ndesc.name, String.format("requires %d value%s",
+              rec.numValues, (rec.numValues > 1 ? "s" : "")));
           }
 					for (int k = 0; k < rec.numValues; k++) {
 						rec.scanValue(result, ndesc.name, args[++idx], k);
