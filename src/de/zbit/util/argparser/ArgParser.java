@@ -2324,7 +2324,7 @@ public class ArgParser {
 	public String[] matchAllArgs(String[] args, int idx, int exitFlags) {
 		Vector<String> unmatched = new Vector<String>(10);
 		
-		while (idx < args.length) {
+		while (args!=null && idx < args.length) {
 			try {
 				idx = matchArg(args, idx);
 				if (unmatchedArg != null) {
