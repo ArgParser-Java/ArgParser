@@ -16,7 +16,7 @@
  */
 
 /**
- * The <code>argparser</code> is a package for parsing the command line
+ * The {@code argparser} is a package for parsing the command line
  * arguments of a Java program; detailed documentation is supplied in the class
  * documentation for ArgParser. For more information and to obtain the original
  * package, see http://www.cs.ubc.ca/~lloyd/java/argparser.html.

@@ -42,7 +42,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>NaN</code>
+	 * Default: {@code NaN}
 	 * @return
 	 */
 	public static final ArgHolder<Double> createDoubleHolder() {
@@ -50,7 +50,7 @@ public class ArgHolder<V> implements Cloneable, Serializable {
 	}
 	
 	/**
-	 * Default: <code>NaN</code>
+	 * Default: {@code NaN}
 	 * @return
 	 */
 	public static final ArgHolder<Float> createFloatHolder() {

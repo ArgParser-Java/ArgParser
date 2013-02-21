@@ -19,7 +19,7 @@ import java.lang.reflect.Array;
 import java.util.Vector;
 
 /**
- * Testing class for the class ArgParser. Executing the <code>main</code> method
+ * Testing class for the class ArgParser. Executing the {@code main} method
  * of this class will perform a suite of tests to help verify correct operation
  * of the parser class.
  * 
@@ -782,7 +782,7 @@ public class ArgParserTest {
 	/**
 	 * Runs a set of tests to verify correct operation of the ArgParser class. If
 	 * all the tests run correctly, the program prints the message
-	 * <code>Passed</code> and terminates. Otherwise, diagnostic information is
+	 * {@code Passed} and terminates. Otherwise, diagnostic information is
 	 * printed at the first point of failure.
 	 */
 	public static void main(String[] args) {

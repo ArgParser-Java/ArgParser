@@ -45,9 +45,9 @@ import de.zbit.util.StringUtil;
  *
  * <p>Here is a simple example in which an application has three
  * command line options:
- * <code>-theta</code> (followed by a floating point value),
- * <code>-file</code> (followed by a string value), and 
- * <code>-debug</code>, which causes a boolean value to be set.
+ * {@code -theta} (followed by a floating point value),
+ * {@code -file} (followed by a string value), and 
+ * {@code -debug}, which causes a boolean value to be set.
  * 
  * <pre>
  *
@@ -86,15 +86,15 @@ import de.zbit.util.StringUtil;
  * descriptions of the allowed options using {@link #addOption addOption}.  The
  * method {@link #matchAllArgs(String[]) matchAllArgs} is then used to match
  * these options against the command line arguments. Values associated with
- * each option are returned in the <code>value</code> field of special
+ * each option are returned in the {@code value} field of special
  * ``holder'' classes (e.g., {@link argparser.DoubleHolder DoubleHolder},
  * {@link argparser.StringHolder StringHolder}, etc.).
  *
  * <p> The first argument to {@link #addOption addOption} is a string that
  * specifies (1) the option's name, (2) a conversion code for its associated
- * value (e.g., <code>%f</code> for floating point, <code>%s</code> for a
- * string, <code>%v</code> for a boolean flag), and (3) an optional description
- * (following the <code>#</code> character) which is used for generating help
+ * value (e.g., {@code %f} for floating point, {@code %s} for a
+ * string, {@code %v} for a boolean flag), and (3) an optional description
+ * (following the {@code #} character) which is used for generating help
  * messages. The second argument is the holder object through which the value
  * is returned. This may be either a type-specific object (such as {@link
  * argparser.DoubleHolder DoubleHolder} or {@link argparser.StringHolder
@@ -104,7 +104,7 @@ import de.zbit.util.StringUtil;
  *
  * <p>By default, arguments that don't match the specified options, are <a
  * href=#rangespec>out of range</a>, or are otherwise formatted incorrectly,
- * will cause <code>matchAllArgs</code> to print a message and exit the
+ * will cause {@code matchAllArgs} to print a message and exit the
  * program. Alternatively, an application can use {@link
  * #matchAllArgs(String[],int,int) matchAllArgs(args,idx,exitFlags)} to obtain
  * an array of unmatched arguments which can then be
@@ -115,12 +115,12 @@ import de.zbit.util.StringUtil;
  * The values associated with options can also be given range specifications. A
  * range specification appears in curly braces immediately following the
  * conversion code. In the code fragment below, we show how to specify an
- * option <code>-name</code> that expects to be provided with one of three
- * string values (<code>john</code>, <code>mary</code>, or <code>jane</code>),
- * an option <code>-index</code> that expects to be supplied with a integer
- * value in the range 1 to 256, an option <code>-size</code> that expects to be
+ * option {@code -name} that expects to be provided with one of three
+ * string values ({@code john}, {@code mary}, or {@code jane}),
+ * an option {@code -index} that expects to be supplied with a integer
+ * value in the range 1 to 256, an option {@code -size} that expects to be
  * supplied with integer values of either 1, 2, 4, 8, or 16, and an option
- * <code>-foo</code> that expects to be supplied with floating point values in
+ * {@code -foo} that expects to be supplied with floating point values in
  * the ranges -99 < foo <= -50, or 50 <= foo < 99.
  *
  * <pre>
@@ -197,12 +197,12 @@ import de.zbit.util.StringUtil;
  * <h3><a name="multipleOptionValues">Multiple Option Values</a></h3>
  *
  * If may be useful for an option to be followed by several values.
- * For instance, we might have an option <code>-velocity</code>
+ * For instance, we might have an option {@code -velocity}
  * which should be followed by three numbers denoting
  * the x, y, and z components of a velocity vector.
  * We can require multiple values for an option
  * by placing a <i>multiplier</i> specification,
- * of the form <code>X</code>N, where N is an integer,
+ * of the form {@code X}N, where N is an integer,
  * after the conversion code (or range specification, if present).
  * For example,
  * 
@@ -216,9 +216,9 @@ import de.zbit.util.StringUtil;
  *    -position xx yy zz
  * </pre>
  * 
- * in the argument list, where <code>xx</code>, <code>yy</code>, and
- * <code>zz</code> are numbers. The values are stored in the array
- * <code>pos</code>.
+ * in the argument list, where {@code xx}, {@code yy}, and
+ * {@code zz} are numbers. The values are stored in the array
+ * {@code pos}.
  *
  * Options requiring multiple values must use arrays to
  * return their values, and cannot be used in single word format.
@@ -248,8 +248,8 @@ import de.zbit.util.StringUtil;
  * </pre>
  * 
  * will create three instances of {@link argparser.DoubleHolder DoubleHolder},
- * initialized to <code>1.2</code>, <code>1000</code>, and <code>-78</code>,
- * and store them in <code>vec</code>.
+ * initialized to {@code 1.2}, {@code 1000}, and {@code -78},
+ * and store them in {@code vec}.
  *
  * <h3><a name="helpInfo">Generating help information</a></h3>
  *
@@ -262,7 +262,7 @@ import de.zbit.util.StringUtil;
  * multiplier specifications (although this can be overriden, as
  * <a href=#valueInfo>described below</a>).
  * The application-supplied description is whatever
- * appears in the specification string after the optional <code>#</code>
+ * appears in the specification string after the optional {@code #}
  * character. The string returned by {@link #getHelpMessage getHelpMessage} for
  * the <a href=#example>first example above</a> would be
  * 
@@ -276,25 +276,25 @@ import de.zbit.util.StringUtil;
  * -debug                  enables display of debugging info
  * </pre>
  * 
- * The options <code>--help</code> and <code>-?</code> are including in the
+ * The options {@code --help} and {@code -?} are including in the
  * parser by default as help options, and they automatically cause the help
  * message to be printed. To exclude these
  * options, one should use the constructor {@link #ArgParser(String,boolean)
  * ArgParser(synopsis,false)}.
  * Help options can also be specified by the application using {@link
- * #addOption addOption} and the conversion code <code>%h</code>.  Help options
+ * #addOption addOption} and the conversion code {@code %h}.  Help options
  * can be disabled using {@link #setHelpOptionsEnabled
  * setHelpOptionsEnabled(false)}.
  *
  * <p><a name=valueInfo>
  * A description of the required values for an option can be
  * specified explicitly 
- * by placing a second <code>#</code> character in the specification
- * string. Everything between the first and second <code>#</code>
+ * by placing a second {@code #} character in the specification
+ * string. Everything between the first and second {@code #}
  * characters then becomes the value description, and everything
- * after the second <code>#</code> character becomes the option
+ * after the second {@code #} character becomes the option
  * description.
- * For example, if the <code>-theta</code> option
+ * For example, if the {@code -theta} option
  * above was specified with
  * <pre>
  *    parser.addOption ("-theta %f #NUMBER#theta value (in degrees)",theta);
@@ -330,7 +330,7 @@ import de.zbit.util.StringUtil;
  * 
  * For instance, this would be useful for an applicatoon that accepts an
  * arbitrary number of input file names.  The options can be parsed using
- * <code>matchAllArgs</code>, and the remaining unmatched arguments
+ * {@code matchAllArgs}, and the remaining unmatched arguments
  * give the file names.
  *
  * <p> If we need more control over the parsing, we can parse arguments one at
@@ -354,7 +354,7 @@ import de.zbit.util.StringUtil;
  * </pre>
  *
  * {@link #matchArg matchArg(args,idx)} matches one option at location
- * <code>idx</code> in the argument list, and then returns the location value
+ * {@code idx} in the argument list, and then returns the location value
  * that should be used for the next match.  If an argument does
  * not match any option,
  * {@link #getUnmatchedArgument getUnmatchedArgument} will return a copy of the
@@ -365,7 +365,7 @@ import de.zbit.util.StringUtil;
  * The method {@link #prependArgs prependArgs} can be used to automatically
  * read in a set of arguments from a file and prepend them onto an existing
  * argument list. Argument words correspond to white-space-delimited strings,
- * and the file may contain the comment character <code>#</code> (which
+ * and the file may contain the comment character {@code #} (which
  * comments out everything to the end of the current line). A typical usage
  * looks like this:
  *
@@ -445,7 +445,7 @@ public class ArgParser {
 	
 	/**
 	 * Returns a string containing the valid conversion codes. These are the
-	 * characters which may follow the <code>%</code> character in the
+	 * characters which may follow the {@code %} character in the
 	 * specification string of {@link #addOption addOption}.
 	 * 
 	 * @return Valid conversion codes
@@ -1286,8 +1286,8 @@ public class ArgParser {
 	}
 
 	/**
-	 * Creates an <code>ArgParser</code> with a synopsis string, and the default
-	 * help options <code>--help</code> and <code>-&#063;</code>.
+	 * Creates an {@code ArgParser} with a synopsis string, and the default
+	 * help options {@code --help} and {@code -&#063;}.
 	 * 
 	 * @param synopsisString
 	 *        string that briefly describes program usage, for use by
@@ -1300,9 +1300,9 @@ public class ArgParser {
 	}
 
 	/**
-	 * Creates an <code>ArgParser</code> with a synopsis string. The help options
-	 * <code>--help</code> and <code>-?</code> are added if
-	 * <code>defaultHelp</code> is true.
+	 * Creates an {@code ArgParser} with a synopsis string. The help options
+	 * {@code --help} and {@code -?} are added if
+	 * {@code defaultHelp} is true.
 	 * 
 	 * @param synopsisString
 	 *        string that briefly describes program usage, for use by
@@ -1364,7 +1364,7 @@ public class ArgParser {
 	
 	/**
 	 * Enables or disables help options. Help options are those associated with a
-	 * conversion code of <code>%h</code>. If help options are enabled, and a help
+	 * conversion code of {@code %h}. If help options are enabled, and a help
 	 * option is matched, then the string produced by {@link #getHelpMessage
 	 * getHelpMessage} is printed to the default print stream and the program
 	 * exits with code 0. Otherwise, arguments which match help options are
@@ -1530,53 +1530,53 @@ public class ArgParser {
 	 * <p>The specification string has the general form
 	 *
 	 * <p> <var>optionNames</var>
-	 * <code>%</code><var>conversionCode</var>
-	 * [<code>{</code><var>rangeSpec</var><code>}</code>]
-	 * [<code>X</code><var>multiplier</var>]
-	 * [<code>#</code><var>valueDescription</var>]
-	 * [<code>#</code><var>optionDescription</var>] </code>
+	 * {@code %}<var>conversionCode</var>
+	 * [{@code {}<var>rangeSpec</var>{@code }}]
+	 * [{@code X}<var>multiplier</var>]
+	 * [{@code #}<var>valueDescription</var>]
+	 * [{@code #}<var>optionDescription</var>] }
 	 * 
 	 * <p>
 	 * where
 	 * <ul> <p><li><var>optionNames</var> is a
 	 * comma-separated list of names for the option
-	 * (such as <code>-f, --file</code>).
+	 * (such as {@code -f, --file}).
 	 * 
 	 * <p><li><var>conversionCode</var> is a single letter,
-	 * following a <code>%</code> character, specifying
+	 * following a {@code %} character, specifying
 	 * information about what value the option requires:
 	 *
 	 * <table>
-	 * <tr><td><code>%f</code></td><td>a floating point number</td>
-	 * <tr><td><code>%i</code></td><td>an integer, in either decimal,
-	 * hex (if preceeded by <code>0x</code>), or
-	 * octal (if preceeded by <code>0</code>)</td>
+	 * <tr><td>{@code %f}</td><td>a floating point number</td>
+	 * <tr><td>{@code %i}</td><td>an integer, in either decimal,
+	 * hex (if preceeded by {@code 0x}), or
+	 * octal (if preceeded by {@code 0})</td>
 	 * <tr valign=top>
-	 * <td><code>%d</code></td><td>a decimal integer</td>
+	 * <td>{@code %d}</td><td>a decimal integer</td>
 	 * <tr valign=top>
-	 * <td><code>%o</code></td><td>an octal integer</td>
+	 * <td>{@code %o}</td><td>an octal integer</td>
 	 * <tr valign=top>
-	 * <td><code>%h</code></td><td>a hex integer (without the
-	 * preceeding <code>0x</code>)</td>
+	 * <td>{@code %h}</td><td>a hex integer (without the
+	 * preceeding {@code 0x})</td>
 	 * <tr valign=top>
-	 * <td><code>%c</code></td><td>a single character, including
-	 * escape sequences (such as <code>\n</code> or <code>\007</code>),
+	 * <td>{@code %c}</td><td>a single character, including
+	 * escape sequences (such as {@code \n} or {@code \007}),
 	 * and optionally enclosed in single quotes
 	 * <tr valign=top>
-	 * <td><code>%b</code></td><td>a boolean value ({@code true}
+	 * <td>{@code %b}</td><td>a boolean value ({@code true}
 	 * or {@code false})</td>
 	 * <tr valign=top>
-	 * <td><code>%s</code></td><td>a string. This will
+	 * <td>{@code %s}</td><td>a string. This will
 	 * be the argument string itself (or its remainder, in
 	 * the case of a single word option)</td>
 	 * <tr valign=top>
-	 * <td><code>%v</code></td><td>no explicit value is expected,
+	 * <td>{@code %v}</td><td>no explicit value is expected,
 	 * but a boolean value of {@code true} (by default)
 	 * will be stored into the associated result holder if this
 	 * option is matched. If one wishes to have a value of
-	 * {@code false} stored instead, then the <code>%v</code>
+	 * {@code false} stored instead, then the {@code %v}
 	 * should be followed by a "range spec" containing
-	 * {@code false}, as in <code>%v{false}</code>.
+	 * {@code false}, as in {@code %v{false}}.
 	 * </table>
 	 *
 	 * <p><li><var>rangeSpec</var> is an optional range specification,
@@ -1594,43 +1594,43 @@ public class ArgParser {
 	 *
 	 * <p><b>Examples:</b>
 	 *
-	 * <p>A range spec of <code>{2,4,8,16}</code> for an integer
+	 * <p>A range spec of {@code {2,4,8,16}} for an integer
 	 * value will allow the integers 2, 4, 8, or 16.
 	 *
-	 * <p>A range spec of <code>{[-1.0,1.0]}</code> for a floating
+	 * <p>A range spec of {@code {[-1.0,1.0]}} for a floating
 	 * point value will allow any floating point number in the
 	 * range -1.0 to 1.0.
 	 * 
-	 * <p>A range spec of <code>{(-88,100],1000}</code> for an integer
+	 * <p>A range spec of {@code {(-88,100],1000}} for an integer
 	 * value will allow values > -88 and <= 100, as well as 1000.
 	 *
-	 * <p>A range spec of <code>{"foo", "bar", ["aaa","zzz")} </code> for a
-	 * string value will allow strings equal to <code>"foo"</code> or
-	 * <code>"bar"</code>, plus any string lexically greater than or equal
-	 * to <code>"aaa"</code> but less then <code>"zzz"</code>.
+	 * <p>A range spec of {@code {"foo", "bar", ["aaa","zzz")} } for a
+	 * string value will allow strings equal to {@code "foo"} or
+	 * {@code "bar"}, plus any string lexically greater than or equal
+	 * to {@code "aaa"} but less then {@code "zzz"}.
 	 *
 	 * <p><li><var>multiplier</var> is an optional integer,
-	 * following a <code>X</code> character, 
+	 * following a {@code X} character, 
 	 * indicating the number of values which the option expects.
 	 * If the multiplier is not specified, it is assumed to be
 	 * 1. If the multiplier value is greater than 1, then the
 	 * result holder should be either an array (of appropriate
 	 * type) with a length greater than or equal to the multiplier
-	 * value, or a <code>java.util.Vector</code>
+	 * value, or a {@code java.util.Vector}
 	 * <a href=#vectorHolder>as discussed below</a>.
 	 *
 	 * <p><li><var>valueDescription</var> is an optional
 	 * description of the option's value requirements,
 	 * and consists of all
-	 * characters between two <code>#</code> characters.
-	 * The final <code>#</code> character initiates the
+	 * characters between two {@code #} characters.
+	 * The final {@code #} character initiates the
 	 * <i>option description</i>, which may be empty.
 	 * The value description is used in
 	 * <a href=#helpInfo>generating help messages</a>.
 	 *
 	 * <p><li><var>optionDescription</var> is an optional
 	 * description of the option itself, consisting of all
-	 * characters between a <code>#</code> character
+	 * characters between a {@code #} character
 	 * and the end of the specification string.
 	 * The option description is used in 
 	 * <a href=#helpInfo>generating help messages</a>.
@@ -1638,54 +1638,54 @@ public class ArgParser {
 	 *
 	 * <p>The result holder must be an object capable of holding
 	 * a value compatible with the conversion code,
-	 * or it must be a <code>java.util.Vector</code>.
+	 * or it must be a {@code java.util.Vector}.
 	 * When the option is matched, its associated value is
 	 * placed in the result holder. If the same option is
 	 * matched repeatedly, the result holder value will be overwritten,
-	 * unless the result holder is a <code>java.util.Vector</code>,
+	 * unless the result holder is a {@code java.util.Vector},
 	 * in which
 	 * case new holder objects for each match will be allocated
 	 * and added to the vector. Thus if
 	 * multiple instances of an option are desired by the
 	 * program, the result holder should be a
-	 * <code>java.util.Vector</code>.
+	 * {@code java.util.Vector}.
 	 *
-	 * <p>If the result holder is not a <code>Vector</code>, then
+	 * <p>If the result holder is not a {@code Vector}, then
 	 * it must correspond as follows to the conversion code:
 	 *
 	 * <table>
 	 * <tr valign=top>
-	 * <td><code>%i</code>, <code>%d</code>, <code>%x</code>,
-	 * <code>%o</code></td>
+	 * <td>{@code %i}, {@code %d}, {@code %x},
+	 * {@code %o}</td>
 	 * <td>{@link argparser.IntHolder IntHolder},
-	 * {@link argparser.LongHolder LongHolder}, <code>int[]</code>, or
-	 * <code>long[]</code></td>
+	 * {@link argparser.LongHolder LongHolder}, {@code int[]}, or
+	 * {@code long[]}</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%f</code></td>
+	 * <td>{@code %f}</td>
 	 * <td>{@link argparser.FloatHolder FloatHolder},
 	 * {@link argparser.DoubleHolder DoubleHolder},
-	 * <code>float[]</code>, or
-	 * <code>double[]</code></td>
+	 * {@code float[]}, or
+	 * {@code double[]}</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%b</code>, <code>%v</code></td>
+	 * <td>{@code %b}, {@code %v}</td>
 	 * <td>{@link argparser.BooleanHolder BooleanHolder} or
-	 * <code>boolean[]</code></td>
+	 * {@code boolean[]}</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%s</code></td>
+	 * <td>{@code %s}</td>
 	 * <td>{@link argparser.StringHolder StringHolder} or
-	 * <code>String[]</code></td>
+	 * {@code String[]}</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%c</code></td>
+	 * <td>{@code %c}</td>
 	 * <td>{@link argparser.CharHolder CharHolder} or
-	 * <code>char[]</code></td>
+	 * {@code char[]}</td>
 	 * </tr>
 	 * </table>
 	 *
@@ -1694,7 +1694,7 @@ public class ArgParser {
 	 * and the array must be at least as long as the multiplier.
 	 *
 	 * <p><a name=vectorHolder>If the result holder is a
-	 * <code>Vector</code>, then the system will create an appropriate
+	 * {@code Vector}, then the system will create an appropriate
 	 * result holder object and add it to the vector. Multiple occurances
 	 * of the option will cause multiple results to be added to the vector.
 	 *
@@ -1703,35 +1703,35 @@ public class ArgParser {
 	 * 
 	 * <table>
 	 * <tr valign=top>
-	 * <td><code>%i</code>, <code>%d</code>, <code>%x</code>,
-	 * <code>%o</code></td>
+	 * <td>{@code %i}, {@code %d}, {@code %x},
+	 * {@code %o}</td>
 	 * <td>{@link argparser.LongHolder LongHolder}, or
-	 * <code>long[]</code> if the multiplier value exceeds 1</td>
+	 * {@code long[]} if the multiplier value exceeds 1</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%f</code></td>
+	 * <td>{@code %f}</td>
 	 * <td>{@link argparser.DoubleHolder DoubleHolder}, or
-	 * <code>double[]</code> if the multiplier value exceeds 1</td>
+	 * {@code double[]} if the multiplier value exceeds 1</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%b</code>, <code>%v</code></td>
+	 * <td>{@code %b}, {@code %v}</td>
 	 * <td>{@link argparser.BooleanHolder BooleanHolder}, or
-	 * <code>boolean[]</code>
+	 * {@code boolean[]}
 	 * if the multiplier value exceeds 1</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%s</code></td>
+	 * <td>{@code %s}</td>
 	 * <td>{@link argparser.StringHolder StringHolder}, or
-	 * <code>String[]</code>
+	 * {@code String[]}
 	 * if the multiplier value exceeds 1</td>
 	 * </tr>
 	 * 
 	 * <tr valign=top>
-	 * <td><code>%c</code></td>
-	 * <td>{@link argparser.CharHolder CharHolder}, or <code>char[]</code>
+	 * <td>{@code %c}</td>
+	 * <td>{@link argparser.CharHolder CharHolder}, or {@code char[]}
 	 * if the multiplier value exceeds 1</td>
 	 * </tr>
 	 * </table>
@@ -2169,8 +2169,8 @@ public class ArgParser {
 	
 	/**
 	 * Reads in a set of strings from a reader and prepends them to an argument
-	 * list. Strings are delimited by either whitespace or double quotes <code>"</code>.
-	 * The character <code>#</code> acts as a comment character, causing input to
+	 * list. Strings are delimited by either whitespace or double quotes {@code "}.
+	 * The character {@code #} acts as a comment character, causing input to
 	 * the end of the current line to be ignored.
 	 * 
 	 * @param reader
@@ -2215,8 +2215,8 @@ public class ArgParser {
 	
 	/**
 	 * Reads in a set of strings from a file and prepends them to an argument
-	 * list. Strings are delimited by either whitespace or double quotes <code>"</code>.
-	 * The character <code>#</code> acts as a comment character, causing input to
+	 * list. Strings are delimited by either whitespace or double quotes {@code "}.
+	 * The character {@code #} acts as a comment character, causing input to
 	 * the end of the current line to be ignored.
 	 * 
 	 * @param file
@@ -2287,19 +2287,19 @@ public class ArgParser {
 	
 	/**
 	 * Matches arguments within an argument list and returns those which were not
-	 * matched. The matching starts at a location in <code>args</code> specified
-	 * by <code>idx</code>, and unmatched arguments are returned in a String
+	 * matched. The matching starts at a location in {@code args} specified
+	 * by {@code idx}, and unmatched arguments are returned in a String
 	 * array.
 	 * 
 	 * <p>
 	 * In the event of an erroneous argument, the method either prints a message
 	 * and exits the program (if {@link #EXIT_ON_ERROR} is set in
-	 * <code>exitFlags</code>) or terminates the matching and creates a error
+	 * {@code exitFlags}) or terminates the matching and creates a error
 	 * message that can be retrieved by {@link #getErrorMessage}.
 	 * 
 	 * <p>
 	 * In the event of an umatched argument, the method will print a message and
-	 * exit if {@link #EXIT_ON_UNMATCHED} is set in <code>errorFlags</code>.
+	 * exit if {@link #EXIT_ON_UNMATCHED} is set in {@code errorFlags}.
 	 * Otherwise, the unmatched argument will be appended to the returned array of
 	 * unmatched values, and the matching will continue at the next location.
 	 * 
@@ -2639,7 +2639,7 @@ public class ArgParser {
 	
 	/**
 	 * Returns the parser's error message. This is automatically set whenever an
-	 * error is encountered in <code>matchArg</code> or <code>matchAllArgs</code>,
+	 * error is encountered in {@code matchArg} or {@code matchAllArgs},
 	 * and is automatically set to {@code null} at the beginning of these
 	 * methods.
 	 * 

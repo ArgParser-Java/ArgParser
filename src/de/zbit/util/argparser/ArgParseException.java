@@ -16,7 +16,7 @@ package de.zbit.util.argparser;
 import java.io.IOException;
 
 /** 
-  * Exception class used by <code>ArgParser</code> when
+  * Exception class used by {@code ArgParser} when
   * command line arguments contain an error.
   * 
   * @author John E. Lloyd
