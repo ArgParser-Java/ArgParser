@@ -2355,7 +2355,7 @@ public class ArgParser {
 	 * 
 	 * <p>
 	 * In the event of an erroneous argument, the method throws an
-	 * {@link argparser.ArgParseException ArgParseException} with an appropriate
+	 * {@link ArgParseException} with an appropriate
 	 * error message. This error message can also be retrieved using
 	 * {@link #getErrorMessage getErrorMessage}.
 	 * 
