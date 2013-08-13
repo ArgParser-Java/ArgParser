@@ -21,10 +21,8 @@ import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.Vector;
-
-import de.zbit.util.ConsoleTools;
-import de.zbit.util.StringUtil;
 
 /**
  * ArgParser is used to parse the command line arguments for a java
@@ -417,6 +415,10 @@ public class ArgParser {
 	 * 
 	 */
 	private int helpIndent = 6;
+	/**
+	 * 
+	 */
+	private int consoleColumns = 80;
 	/**
 	 * 
 	 */
@@ -1430,6 +1432,25 @@ public class ArgParser {
 		helpIndent = indent;
 	}
 
+	/**
+	 * Returns the number of columns that the console is assumed to have.
+	 * 
+	 * @return
+	 */
+	public int getConsoleColumns() {
+	  return consoleColumns;
+	}
+	
+	/**
+	 * Sets the number of columns that the console to which output is written is
+	 * assumed to have. Default is 80.
+	 * 
+	 * @param columns
+	 */
+	public void setConsoleColumns(int columns) {
+	  consoleColumns = columns;
+	}
+	
 	/**
 	 * 
 	 */
@@ -2481,63 +2502,83 @@ public class ArgParser {
 		return sbuf.toString();
 	}
 
-// 	public String getShortHelpMessage ()
-// 	 {
-// 	   String s;
-// 	   Record rec;
-// 	   NameDesc ndesc;
-// 	   int initialIndent = 8;
-// 	   int col = initialIndent;
+	/**
+	 * Returns the longest common prefix of both strings. This method is
+	 * case-sensitive.
+	 * 
+	 * @param a
+	 *        string a
+	 * @param b
+	 *        string b
+	 * @return the longest common prefix
+	 */
+	public static String getLongestCommonPrefix(String a, String b) {
+		int i;
+		for (i = 0; i < Math.min(a.length(), b.length()); i++) {
+			if (a.charAt(i) != b.charAt(i)) break;
+		}
+		return a.substring(0, i);
+	}
 
-// 	   if (maxcols <= 0)
-// 	    { maxcols = 80; 
-// 	    }
-// 	   if (matchList.size() > 0)
-// 	    { ps.print (spaceString(initialIndent));
-// 	    }
-// 	   for (int i=0; i<matchList.size(); i++)
-// 	    { rec = (Record)matchList.get(i);
-// 	      s = "[";
-// 	      for (ndesc=rec.nameList; ndesc!=null; ndesc=ndesc.next)
-// 	       { s = s + ndesc.name;
-// 		 if (ndesc.oneWord == false)
-// 		  { s = s + " ";
-// 		  }
-// 		 if (ndesc.next != null)
-// 		  { s = s + ",";
-// 		  }
-// 	       }
-// 	      if (rec.convertCode != 'v' && rec.convertCode != 'h')
-// 	       { if (rec.valueDesc != null)
-// 		  { s += rec.valueDesc; 
-// 		  }
-// 		 else
-// 		  { s = s + "<" + rec.valTypeName() + ">";
-// 		    if (rec.numValues > 1)
-// 		     { s += "X" + rec.numValues;
-// 		     }
-// 		  }
-// 	       }
-// 	      s = s + "]";
-// 	      /* 
-// 		 (col+=s.length()) > (maxcols-1) => we will spill over edge. 
-// 			 we use (maxcols-1) because if we go right to the edge
-// 			 (maxcols), we get wrap new line inserted "for us".
-// 		 i != 0 means we print the first entry, no matter
-// 			 how long it is. Subsequent entries are printed
-// 			 full length anyway. */		     
+	
+	/**
+	 * Inserts linebreaks into {@code message} and return the newly formatted
+	 * string.
+	 * 
+	 * @param message the string to be formatted
+	 * @param lineBreak the column at which the linebreak should occur at latest
+	 * @param lineBreakSymbol the string to use as linebreak
+	 * @param padString a padding string that will be placed at the start of each
+	 *                  new line
+	 * @param breakBeforeLineBreak if {@code false}, breaks after a line is longer
+	 *         than {@code lineBreak} characters. If true, ensures that no line is
+	 *         longer than {@code lineBreak} characters, i.e., breaks before that
+	 *         number of chars.
+	 * @return
+	 */
+	public static String insertLineBreaks(String message, int lineBreak,
+	  String lineBreakSymbol, String padString, boolean breakBeforeLineBreak) {
+	  
+    StringBuilder sb = new StringBuilder();
+    StringTokenizer st = new StringTokenizer(message != null ? message : ""," ");
+    if (st.hasMoreElements()) {
+      sb.append(st.nextElement().toString());
+    }
+    int length = sb.length();
+    int pos;
+    int count = 0;
+    while (st.hasMoreElements()) {
+      String tmp = st.nextElement().toString();
+      
+      if ((lineBreak < Integer.MAX_VALUE) && (
+          (length >= lineBreak) || 
+          (breakBeforeLineBreak && (length + tmp.length()) >= lineBreak) )) {
+        sb.append(lineBreakSymbol);
+        if( padString != null ) {
+          sb.append(padString);
+        }
+        count++;
+        length = 0;
+      }
+      else {
+        sb.append(' ');
+      }
 
-// 	      if ((col+=s.length()) > (maxcols-1) && i != 0)
-// 	       { col = initialIndent+s.length();
-// 		 ps.print ("\n" + spaceString(initialIndent));
-// 	       }
-// 	      ps.print (s);
-// 	    }
-// 	   if (matchList.size() > 0)
-// 	    { ps.print ('\n');
-// 	      ps.flush();
-// 	    }
-// 	 }
+      // Append current element
+      sb.append(tmp);
+
+      // Change length
+      if ((pos = tmp.indexOf(lineBreakSymbol)) >= 0) {
+        length = tmp.length() - pos - lineBreakSymbol.length();
+      }
+      else {
+        length += tmp.length() + 1;
+      }
+    }
+    return sb.toString();
+
+	}
+
 
 	/**
 	 * Returns a string describing the allowed options in detail.
@@ -2591,7 +2632,7 @@ public class ArgParser {
 				}
 				if (ndesc.next != null) {
 					next = ndesc.next.name;
-					String prefix = StringUtil.getLongestCommonPrefix(next, ndesc.name);
+					String prefix = getLongestCommonPrefix(next, ndesc.name);
 					int lenDiffCurr = Math.abs(ndesc.name.length() - prefix.length());
 					int lenDiffNext = Math.abs(next.length() - prefix.length());
 					if (((lenDiffCurr == 1) || (lenDiffNext == 1))
@@ -2628,9 +2669,9 @@ public class ArgParser {
 					pad = helpIndent;
 				}
 				s.append(spaceString(pad));
-				s.append(StringUtil.insertLineBreaksAndCount(rec.helpMsg, 
-					ConsoleTools.getColumns() - helpIndent, 
-					"\n", StringUtil.fill("", helpIndent, ' ', false), true).getA());
+				s.append(insertLineBreaks(rec.helpMsg, 
+					getConsoleColumns() - helpIndent, "\n",
+					String.format("%1$" + helpIndent + "s", ""), true));
 			}
 			s.append('\n');
 		}
