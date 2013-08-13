@@ -1,15 +1,19 @@
-/* $Id$
- * $URL$
- * Copyright John E. Lloyd, 2004. All rights reserved. Permission to use,
- * copy, modify and redistribute is granted, provided that this copyright
- * notice is retained and the author is given credit whenever appropriate.
+/* 
+ * Copyright 2004 by John E. Lloyd
+ * Copyright 2011-2013 by Andreas Draeger
  *
- * This  software is distributed "as is", without any warranty, including 
- * any implied warranty of merchantability or fitness for a particular
- * use. The author assumes no responsibility for, and shall not be liable
- * for, any special, indirect, or consequential damages, or any damages
- * whatsoever, arising out of or in connection with the use of this
- * software.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.zbit.util.argparser;
 
@@ -18,11 +22,6 @@ import java.io.IOException;
 /** 
   * Exception class used by {@code ArgParser} when
   * command line arguments contain an error.
-  * 
-  * @author John E. Lloyd
-  * @author Andreas Dr&auml;ger
-  * @since Fall 2004
-  * @version $Rev$
   */
 public class ArgParseException extends IOException {
 	/**
