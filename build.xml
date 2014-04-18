@@ -1,0 +1,57 @@
+<!-- The java based ANT tool is available from         -->
+<!-- http://jakarta.apache.org/ant                     -->
+
+<project name="ArgParser" default="jar" basedir=".">
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+  <!-- define some properties that are used throughout the tasks -->
+  <target name="init">
+    <property name="base" location="." />
+
+  	<property name="src" location="${base}/src" />
+    <property name="test" location="${base}/test" />
+
+    <property name="classes" location="${base}/bin" />
+
+    <property name="dist" location="${base}/dist" />
+
+    <property name="appBase" value="${dist}/argparser" />
+
+    <property name="appJar" value="${appBase}.jar" />
+
+    <property name="appJarSrc" value="${appBase}-src.jar" />
+
+  </target>
+
+  <!-- puts the application specific classes into {application}.jar. -->
+  <target name="jar" depends="init">
+    <delete file="${appJar}" />
+    <jar jarfile="${appJar}">
+  
+      <!-- Include all classes, but not the package.html -->
+      <fileset dir="${classes}">
+        <exclude name="**/package.html" />
+      </fileset>
+
+      <zipfileset file="LICENSE.txt" prefix="META-INF" />
+
+
+    </jar>
+  </target>
+
+  <!-- puts the source files into {application}-src.jar. -->
+  <target name="jar-src" depends="init">
+    <delete file="${appJarSrc}" />
+    <jar jarfile="${appJarSrc}">
+  
+      <!-- Include all classes, but not the package.html -->
+      <fileset dir="${src}" />
+      <fileset dir="${test}" />
+      <fileset file="LICENSE.txt" />
+
+
+    </jar>
+  </target>
+
+</project>
