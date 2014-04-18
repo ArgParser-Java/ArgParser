@@ -22,4 +22,4 @@
  * documentation for ArgParser. For more information and to obtain the original
  * package, see http://www.cs.ubc.ca/~lloyd/java/argparser.html.
  */
-package de.zbit.util.argparser;
+package org.argparser;

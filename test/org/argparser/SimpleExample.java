@@ -15,7 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.zbit.util.argparser;
+package org.argparser;
+
 
 /**
  * Gives a very simple example of the use of {@link ArgParser}.

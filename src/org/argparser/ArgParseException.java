@@ -1,5 +1,6 @@
 /* 
  * Copyright 2004 by John E. Lloyd
+ * Copyright 2011-2013 by Andreas Draeger
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -14,54 +15,39 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.zbit.util.argparser;
+package org.argparser;
 
 import java.io.IOException;
 
 /** 
-  * Exception class used by {@link StringScanner} when
-  * command line arguments do not parse correctly.
-  * 
-  * @see StringScanner
+  * Exception class used by {@code ArgParser} when
+  * command line arguments contain an error.
   */
-class StringScanException extends IOException {
+public class ArgParseException extends IOException {
 	/**
 	 * Generated serial version identifier.
 	 */
-	private static final long serialVersionUID = 1976498726950191808L;
+	private static final long serialVersionUID = -8868205997224787923L;
 	
 	/**
+	 * Creates a new ArgParseException with the given message.
 	 * 
+	 * @param msg
+	 *        Exception message
 	 */
-	int failIdx;
+	public ArgParseException(String msg) {
+		super(msg);
+	}
 	
 	/**
-	 * Creates a new StringScanException with the given message.
+	 * Creates a new ArgParseException from the given argument and message.
 	 * 
+	 * @param arg
+	 *        Offending argument
 	 * @param msg
 	 *        Error message
-	 * @see StringScanner
 	 */
-	public StringScanException(String msg) {
-		super(msg);
+	public ArgParseException(String arg, String msg) {
+		super(arg + ": " + msg);
 	}
-	
-	/**
-	 * 
-	 * @param idx
-	 * @param msg
-	 */
-	public StringScanException(int idx, String msg) {
-		super(msg);
-		failIdx = idx;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getFailIndex() {
-		return failIdx;
-	}
-	
 }
